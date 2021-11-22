@@ -1,4 +1,4 @@
-const db = require("../data/db");
+const db = require("../repositories/db");
 
 exports.post = async (req, res, next) => {
     console.log(req.body);
