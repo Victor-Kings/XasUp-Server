@@ -1,0 +1,21 @@
+{
+  "name": "serverChatNode",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node kafkaClient.js",
+    "start:rest": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mqtt": "^4.2.8",
+    "no-kafka": "^3.4.3",
+    "pg": "^8.7.1"
+  }
+}
