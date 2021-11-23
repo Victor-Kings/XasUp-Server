@@ -4,13 +4,18 @@ exports.post = async (req, res, next) => {
     console.log(req.body);
     const name = req.body.name
     await db.insertUser(name);
-    res.status(201).send('Rota POST!');
+    res.status(201).send('Success');
+};
+
+exports.createFriend = async (req, res, next) => {
+    await db.createFriend(req.body);
+    res.status(201).send('Success');
 };
   
 exports.getById = async(req, res, next) => {
     let id = req.params.id;
     const user = await db.selectUser(id)
-    res.status(200).send(`Rota GET com ID! ${id} é ${user}`);
+    res.status(200).send(user);
 };
 
 exports.getFriends = async(req, res, next) => {
