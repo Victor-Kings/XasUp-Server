@@ -1,11 +1,9 @@
 import { useState } from "react";
 import "./chatContent.css";
-
+import SendIcon from "@mui/icons-material/Send";
+import Button from "@mui/material/Button";
 
 export function ChatContent() {
-
-  
-
   /*var chatItem = [
     {
       key: 1,
@@ -57,47 +55,37 @@ export function ChatContent() {
       msg: "I'm taliking about the tutorial",
     },
   ];*/
-  
-  const [message, updateMessage] = useState<string>('')
-  const [messages, updateMessages] = useState<string[]>([])
+
+  const [message, updateMessage] = useState<string>("");
+  const [messages, updateMessages] = useState<string[]>([]);
 
   const handleFormSubmit = () => {
-    updateMessages([...messages, message])
-    updateMessage('')
-  }
+    if (message !== "") {
+      updateMessages([...messages, message]);
+      updateMessage("");
+    }
+  };
 
-  const handleChange = (event: any) => {
-    updateMessage(event);
-  }
+  document.addEventListener("keypress", function(e) {
+    if(e.key === 'Enter') {
+      handleFormSubmit()
+    }
+  });
 
   return (
     <div className="main__chatcontent">
       <div className="content__header">
-        <div className="blocks">
           <div className="current-chatting-user">
-            <p>Tim Hover</p>
+            <p id="tittle">Chat</p>
           </div>
-        </div>
-
-        <div className="blocks">
-          <div className="settings">
-            <button className="btn-nobg">
-              <i className="fa fa-cog"></i>
-            </button>
-          </div>
-        </div>
+          <div className="settings"></div>
       </div>
       <div className="content__body">
         <div className="chat__items">
-          {messages.map((item, index) => (
+          {messages.map((msg, index) => (
             <div>
-              <li
-              style={{listStyle: 'none', textAlign: 'right', padding: '1rem'}}
-              key={index}
-              >
-              <span style={{border: '1px', borderRadius: '5px', display: 'inline-block',listStyle: 'none', marginBottom: '1rem', backgroundColor: '#89ddff', borderColor: '#1abeff',padding: '6px'}}>
-                  {item}
-              </span>
+              <li id="messageList" key={index}>
+                <span id="message">{msg}</span>
               </li>
             </div>
           ))}
@@ -109,14 +97,17 @@ export function ChatContent() {
             <i className="fa fa-plus"></i>
           </button>
           <input
-            onChange={(e) => handleChange(e.target.value)}
+            onChange={(e) => updateMessage(e.target.value)}
             type="text"
-            placeholder="Type a message here"
+            placeholder="Digite uma mensagem aqui..."
             value={message}
           />
-          <button className="btnSendMsg" id="sendMsgBtn" onClick={handleFormSubmit}>
-            <i className="fa fa-paper-plane"></i>
-          </button>
+          <Button
+            variant="text"
+            id="sendMsgBtn"
+            startIcon={<SendIcon />}
+            onClick={handleFormSubmit}
+          ></Button>
         </div>
       </div>
     </div>

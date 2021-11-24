@@ -118,6 +118,7 @@ export function ChatList() {
           marginLeft: "5%",
           marginTop: "10px",
           color: "white",
+          fontWeight: "bold",
         }}
       >
         Adicionar contato
