@@ -1,27 +1,25 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Grid from '@mui/material/Grid';
 
-
-const Chatbox = () => {
+export function Chatbox(){
    
-    const [message, updateMessage] = useState('')
-    const [messages, updateMessages] = useState([])
+    const [message, updateMessage] = useState<string>('')
+    const [messages, updateMessages] = useState<string[]>([])
 
     const handleFormSubmit = () => {
       updateMessages([...messages, message])
     }
 
-    const handleChange = event => {
+    const handleChange = (event: any) => {
       console.log(event)
       updateMessage(event);
     }
-console.log(messages)
   return (
     <Grid container style={{maxWidth: '700px', justifyContent: 'center', margin: '20px auto auto auto'}} rowSpacing={0} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-      <Grid item xs={12} backgroundColor="#4169E1" style={{WebkitBorderTopLeftRadius: '10px', WebkitBorderTopRightRadius: '10px', height: '50px'}}>
+      <Grid item xs={12} style={{WebkitBorderTopLeftRadius: '10px', WebkitBorderTopRightRadius: '10px', height: '50px', backgroundColor: 'gray'}}>
       <h2 style={{margin: '10px auto auto'}}>Chatzaum bolado</h2>
       </Grid>
-      <Grid item xs={12} backgroundColor="#B0C4DE" style={{height: '700px'}}>
+      <Grid item xs={12} style={{height: '700px'}}>
       <ul className="list">
           { messages.map((m, index) => (
               <li
@@ -35,7 +33,7 @@ console.log(messages)
           ))}
       </ul>
       </Grid>
-      <Grid item xs={12} backgroundColor="#4682B4" style={{WebkitBorderBottomLeftRadius: '10px', WebkitBorderBottomRightRadius: '10px', height: '50px'}}>
+      <Grid item xs={12} style={{WebkitBorderBottomLeftRadius: '10px', WebkitBorderBottomRightRadius: '10px', height: '50px'}}>
         <div style={{display: 'flex'}}>
         <input
             style={{width: '80%', height: '25px',marginTop: '10px',borderRadius: '5px', borderStyle: 'none', outlineStyle: 'none'}}
@@ -51,4 +49,3 @@ console.log(messages)
   );
 };
 
-export default Chatbox;
