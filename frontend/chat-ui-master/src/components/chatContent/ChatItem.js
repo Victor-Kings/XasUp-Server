@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Avatar from "../chatList/Avatar";
 
 export default class ChatItem extends Component {
   constructor(props) {
@@ -16,7 +15,6 @@ export default class ChatItem extends Component {
           <div className="chat__meta">
           </div>
         </div>
-        <Avatar isOnline="active" image={this.props.image} />
       </div>
     );
   }
