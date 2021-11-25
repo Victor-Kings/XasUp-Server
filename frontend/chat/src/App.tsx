@@ -1,9 +1,10 @@
 import { ChatBody } from "./components/chatBody/ChatBody";
+import {MainContainer} from "./styles"
 
 export function App() {
   return (
-    <div className="App">
-     <ChatBody/>
-    </div>
+    <MainContainer>
+      <ChatBody/>
+    </MainContainer>
   );
 }

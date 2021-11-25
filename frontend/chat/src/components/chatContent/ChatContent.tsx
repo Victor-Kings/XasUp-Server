@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./chatContent.css";
 import SendIcon from "@mui/icons-material/Send";
 import Button from "@mui/material/Button";
 
-export function ChatContent() {
+export function ChatContent(props:any) {
   /*var chatItem = [
     {
       key: 1,
@@ -62,18 +62,21 @@ export function ChatContent() {
   const handleFormSubmit = () => {
     if (message !== "") {
       updateMessages([...messages, message]);
-      updateMessage("");
     }
   };
 
-  document.addEventListener("keypress", function(e) {
-    if(e.key === 'Enter') {
-      handleFormSubmit()
+  useEffect(()=>{
+    updateMessage("");
+  },[messages])
+
+  const onKeyPressHandler= ((e:any)=>{
+    if(e.key==="Enter"){
+      handleFormSubmit();
     }
-  });
+  })
 
   return (
-    <div className="main__chatcontent">
+    <div className="main__chatcontent" style={{backgroundColor:"green"}}>
       <div className="content__header">
           <div className="current-chatting-user">
             <p id="tittle">Chat</p>
@@ -93,14 +96,12 @@ export function ChatContent() {
       </div>
       <div className="content__footer">
         <div className="sendNewMessage">
-          <button className="addFiles">
-            <i className="fa fa-plus"></i>
-          </button>
           <input
             onChange={(e) => updateMessage(e.target.value)}
             type="text"
             placeholder="Digite uma mensagem aqui..."
             value={message}
+            onKeyPress={onKeyPressHandler}
           />
           <Button
             variant="text"
