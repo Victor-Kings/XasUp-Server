@@ -1,11 +1,11 @@
-import React, { Component, createRef, useEffect } from "react";
+import React, { useState, createRef } from "react";
 
 import "./chatContent.css";
 import ChatItem from "./ChatItem";
 
-export default class ChatContent extends Component {
-  messagesEndRef = createRef(null);
-  chatItms = [
+export default function ChatContent(props){
+  const messagesEndRef = createRef(null);
+  var chatItms = [
     {
       key: 1,
       type: "",
@@ -43,48 +43,37 @@ export default class ChatContent extends Component {
     },
   ];
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      chat: this.chatItms,
-      msg: "",
-    };
-  }
+  const [chat, setChat] = useState(chatItms)
+  const [msg, setMsg] = useState("")
 
-  scrollToBottom = () => {
-    this.messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+  const scrollToBottom = () => {
+    messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
   };
-
   
-
-  componentDidMount() {
-    window.addEventListener("keydown", (e) => {
-      if (e.keyCode == 13) {
-        this.updateMessage();
-      }
-    });
-    this.scrollToBottom();
-  }
-
-  updateMessage = () => {
-    if (this.state.msg != "") {
-      this.chatItms.push({
+console.log("AAA", chat)
+  const updateMessage = () => {
+    if (msg !== "") {
+      setChat([...chat, {
         key: 1,
         type: "",
-        msg: this.state.msg,
-      });
-      this.setState({ chat: [...this.chatItms] });
-      this.scrollToBottom();
-      this.setState({ msg: "" });
+        msg: msg,
+      }])
+      scrollToBottom();
+      setMsg("")
     }
-    this.scrollToBottom();
+  scrollToBottom();
   }
 
-  onStateChange = (e) => {
-    this.setState({ msg: e.target.value });
+  const onStateChange = (e) => {
+    setMsg(e.target.value)
   };
 
-  render() {
+ const handleKeyPress = (event) => {
+    if(event.key === 'Enter'){
+      console.log('enter press here! ')
+      updateMessage()
+    }
+  }
     return (
       <div className="main__chatcontent">
         <div className="content__header">
@@ -101,7 +90,7 @@ export default class ChatContent extends Component {
         </div>
         <div className="content__body">
           <div className="chat__items">
-            {this.state.chat.map((itm, index) => {
+            {chat.map((itm, index) => {
               return (
                 <ChatItem
                   animationDelay={index + 2}
@@ -111,7 +100,7 @@ export default class ChatContent extends Component {
                 />
               );
             })}
-            <div ref={this.messagesEndRef} />
+            <div ref={messagesEndRef} />
           </div>
         </div>
         <div className="content__footer">
@@ -119,10 +108,11 @@ export default class ChatContent extends Component {
             <input
               type="text"
               placeholder="Digite uma mensagem aqui..."
-              onChange={this.onStateChange}
-              value={this.state.msg}
+              onChange={onStateChange}
+              value={msg}
+              onKeyPress={handleKeyPress}
             />
-            <button className="btnSendMsg" id="sendMsgBtn" onClick={this.updateMessage}>
+            <button className="btnSendMsg" id="sendMsgBtn" onClick={updateMessage}>
               <i className="fa fa-paper-plane"></i>
             </button>
           </div>
@@ -130,4 +120,4 @@ export default class ChatContent extends Component {
       </div>
     );
   }
-}
+

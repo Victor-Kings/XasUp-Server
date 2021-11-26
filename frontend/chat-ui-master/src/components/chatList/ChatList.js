@@ -1,9 +1,9 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import "./chatList.css";
 import ChatListItems from "./ChatListItems";
 
-export default class ChatList extends Component {
-  allChatUsers = [
+export default function ChatList(props){
+ const  allChatUsers = [
     {
       id: 1,
       name: "Tim Hover",
@@ -65,13 +65,15 @@ export default class ChatList extends Component {
       isOnline: true,
     },
   ];
-  constructor(props) {
-    super(props);
-    this.state = {
-      allChats: this.allChatUsers,
-    };
-  }
-  render() {
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     allChats: this.allChatUsers,
+  //   };
+  // }
+  // eslint-disable-next-line
+  const [allChats, setAllChats] = useState(allChatUsers);
+
     return (
       <div className="main__chatlist">
         <button className="btn">
@@ -90,7 +92,7 @@ export default class ChatList extends Component {
           </div>
         </div>
         <div className="chatlist__items">
-          {this.state.allChats.map((item, index) => {
+          {allChats.map((item, index) => {
             return (
               <ChatListItems
                 name={item.name}
@@ -104,4 +106,4 @@ export default class ChatList extends Component {
       </div>
     );
   }
-}
+
