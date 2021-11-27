@@ -25,7 +25,10 @@
   overflow: auto;
   padding-right: 10px;
 }
+.container {
+}
 .chat__item {
+  width: 100%;
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
