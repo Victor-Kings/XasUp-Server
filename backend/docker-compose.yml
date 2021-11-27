@@ -2,11 +2,13 @@ version: "3.3"
 
 services:
   mosquitto:
-    image: eclipse-mosquitto:1.5.5
-    container_name: mosquitto1
+    image: eclipse-mosquitto:1.6.2
+    container_name: mosquitto
+    expose:
+      - "1883"
     ports:
-       - "0.0.0.0:1883:1883"
-       - "0.0.0.0:9001:9001"
+      - "1883:1883"
+      - "9001:9001"
   # mosquitto:
   #   image: eclipse-mosquitto:1.5.5
   #   hostname: mosquitto

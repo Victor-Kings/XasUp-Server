@@ -3,58 +3,16 @@ import userContext from "../../context/userContext";
 
 import "./chatContent.css";
 import ChatItem from "./ChatItem";
-import { useSubscription  } from 'mqtt-react-hooks';
 
-var chatItms = [
-  {
-    key: 1,
-    type: "",
-    msg: "Hi Tim, How are you?",
-  },
-  {
-    key: 2,
-    type: "other",
-    msg: "I am fine.",
-  },
-  {
-    key: 3,
-    type: "other",
-    msg: "What about you?",
-  },
-  {
-    key: 4,
-    type: "",
-    msg: "Awesome these days.",
-  },
-  {
-    key: 5,
-    type: "other",
-    msg: "Finally. What's the plan?",
-  },
-  {
-    key: 6,
-    type: "",
-    msg: "what plan mate?",
-  },
-  {
-    key: 7,
-    type: "other",
-    msg: "I'm taliking about the tutorial",
-  },
-];
+import mqtt from "mqtt"
+
+var clientId = 'mqttjs_' + Math.random().toString(16).substr(2, 8)
+
+var host = 'ws://localhost:9001/'
+
 
 
 export default function ChatContent(props){
-  const { message } = useSubscription ('1');
-
-  console.log("TESTE", message);
-
-  
-  useEffect(() => {
-    if (message)console.log("message", message);;
-  }, [message]);
-
-
   const messagesEndRef = createRef(null);
   const {currentChat, userMsg, updateMsg} = useContext(userContext);
   const [chat, setChat] = useState(()=> {
@@ -66,8 +24,6 @@ export default function ChatContent(props){
     return []
   })
   const [msg, setMsg] = useState("")
-
-
 
   const walkChatToSet=()=>{
     let flag = 0
@@ -124,52 +80,83 @@ export default function ChatContent(props){
       updateMessage()
     }
   }
-    return (
-      <div className="main__chatcontent">
-        <div className="content__header">
-          <div className="blocks">
-            <div className="current-chatting-user">
-              <p>Tim Hover</p>
-            </div>
-          </div>
 
-          <div className="blocks">
-            <div className="settings">
-            </div>
+  var client = mqtt.connect(host)
+  console.log('connecting mqtt client')
+
+  client.on('error', function (err) {
+    console.log(err)
+    client.end()
+  })
+  
+  client.on('connect', function () {
+    console.log('client connected:' + clientId)
+    client.subscribe('1', { qos: 0 })
+   
+  })
+  
+  client.on('message', function (topic, message, packet) {
+    console.log('Received Message:= ' + message.toString() + '\nOn topic:= ' + topic)
+  })
+
+  const closeClient = () =>{
+    client.on('close', function () {
+      console.log(clientId + ' disconnected')
+    })
+  }
+
+  const publishClient = (msg) => {
+    client.on('connect', function () {
+       client.publish('topic', msg, { qos: 0, retain: false })
+    })
+  }
+
+  return (
+    <div className="main__chatcontent">
+      <div className="content__header">
+        <div className="blocks">
+          <div className="current-chatting-user">
+            <p>Tim Hover</p>
           </div>
         </div>
-        <div className="container">
-          <div className="content__body">
-            <div className="chat__items">
-              {chat.map((itm, index) => {
-                return (
-                  <ChatItem
-                  animationDelay={index + 2}
-                  key={itm.key}
-                  user={itm.type ? itm.type : "me"}
-                  msg={itm.msg}
-                  />
-                  );
-                })}
-              <div ref={messagesEndRef} />
-            </div>
-          </div>
-          <div className="content__footer">
-            <div className="sendNewMessage">
-              <input
-                type="text"
-                placeholder="Digite uma mensagem aqui..."
-                onChange={onStateChange}
-                value={msg}
-                onKeyPress={handleKeyPress}
-                />
-              <button className="btnSendMsg" id="sendMsgBtn" onClick={updateMessage}>
-                <i className="fa fa-paper-plane"></i>
-              </button>
-            </div>
+
+        <div className="blocks">
+          <div className="settings">
           </div>
         </div>
       </div>
-    );
+      <div className="container">
+        <div className="content__body">
+          <div className="chat__items">
+            {chat.map((itm, index) => {
+              return (
+                <ChatItem
+                animationDelay={index + 2}
+                key={itm.key}
+                user={itm.type ? itm.type : "me"}
+                msg={itm.msg}
+                />
+                );
+              })}
+            <div ref={messagesEndRef} />
+          </div>
+        </div>
+        <div className="content__footer">
+          <div className="sendNewMessage">
+            <input
+              type="text"
+              placeholder="Digite uma mensagem aqui..."
+              onChange={onStateChange}
+              value={msg}
+              onKeyPress={handleKeyPress}
+              />
+            <button className="btnSendMsg" id="sendMsgBtn" onClick={updateMessage}>
+              <i className="fa fa-paper-plane"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
   }
 
