@@ -15,6 +15,8 @@ var host = 'ws://localhost:9001/'
 export default function ChatContent(props){
   const messagesEndRef = createRef(null);
   const {currentChat, userMsg, updateMsg} = useContext(userContext);
+  var client = mqtt.connect(host)
+  const [isConnected, setIsConnected] = useState(false);
   const [chat, setChat] = useState(()=> {
     userMsg.map((value)=>{
       if(value.id == currentChat){
@@ -63,7 +65,7 @@ export default function ChatContent(props){
           msg: msg,
         }
       )
-
+      mqttPublish(msg)
       setMsg("")
     }
     scrollToBottom();
@@ -81,34 +83,39 @@ export default function ChatContent(props){
     }
   }
 
-  var client = mqtt.connect(host)
-  console.log('connecting mqtt client')
-
+  
+  if(client){
   client.on('error', function (err) {
     console.log(err)
-    client.end()
+    setIsConnected(false)
   })
-  
+  if(isConnected==false){
   client.on('connect', function () {
     console.log('client connected:' + clientId)
     client.subscribe('1', { qos: 0 })
-   
-  })
+    setIsConnected(true)
+  })}
   
   client.on('message', function (topic, message, packet) {
     console.log('Received Message:= ' + message.toString() + '\nOn topic:= ' + topic)
   })
-
+}
   const closeClient = () =>{
     client.on('close', function () {
       console.log(clientId + ' disconnected')
     })
   }
 
-  const publishClient = (msg) => {
-    client.on('connect', function () {
-       client.publish('topic', msg, { qos: 0, retain: false })
-    })
+  const mqttPublish = (msg) => {
+    if (client) {
+      console.log("EÀ");
+      client.publish('baeldung', JSON.stringify({topic: currentChat, data: msg}), { qos:0 }, error => {
+        if (error) {
+          console.error('Publish error: ', error);
+        }
+      });
+      console.log("EÀD");
+    }
   }
 
   return (
