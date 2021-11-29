@@ -8,13 +8,13 @@ import mqtt from "mqtt"
 
 var clientId = 'mqttjs_' + Math.random().toString(16).substr(2, 8)
 
-var host = 'ws://localhost:9001/'
+var host = 'ws://localhost:9001/mqtt'
 
 
 
 export default function ChatContent(props){
   const messagesEndRef = createRef(null);
-  const {currentChat, userMsg, updateMsg} = useContext(userContext);
+  const {currentChat, userMsg, updateMsg,listFriends,user} = useContext(userContext);
   var client = mqtt.connect(host)
   const [isConnected, setIsConnected] = useState(false);
   const [chat, setChat] = useState(()=> {
@@ -92,7 +92,7 @@ export default function ChatContent(props){
   if(isConnected==false){
   client.on('connect', function () {
     console.log('client connected:' + clientId)
-    client.subscribe('1', { qos: 0 })
+    client.subscribe(user?.id||"", { qos: 0 })
     setIsConnected(true)
   })}
   
@@ -123,7 +123,7 @@ export default function ChatContent(props){
       <div className="content__header">
         <div className="blocks">
           <div className="current-chatting-user">
-            <p>Tim Hover</p>
+            <p>{listFriends.find((e)=>(e.id==currentChat))?.name||""}</p>
           </div>
         </div>
 
