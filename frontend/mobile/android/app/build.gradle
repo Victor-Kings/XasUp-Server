@@ -215,6 +215,9 @@ dependencies {
     } else {
         implementation jscFlavor
     }
+
+    implementation project(':sp-react-native-mqtt')
+    implementation project(':@react-native-async-storage')  
 }
 
 // Run this once to be able to run the application with BUCK

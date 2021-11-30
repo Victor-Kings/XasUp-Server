@@ -8,11 +8,6 @@ const Header = ({ title }) => {
 		<View style={styles.container}>
 			<View style={styles.headerContainer}>
 				<Text style={styles.headerTitle}>{title}</Text>
-				<TouchableOpacity onPress={() => {}} style={styles.imageContainer}>
-					<Image style={styles.image} source={{
-						uri: 'https://images.pexels.com/photos/697509/pexels-photo-697509.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
-					}} />
-				</TouchableOpacity>
 			</View>
 		</View>
 	)

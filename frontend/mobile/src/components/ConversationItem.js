@@ -1,24 +1,14 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, Image, Modal } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
-
 import ProfileInfo from './common/ProfileInfo';
 
 import { theme } from '../theme';
+import userContext from '../context/userContext';
+const ConversationItem = ({  username,  lastMessage, notification, id }) => {
 
-const ConversationItem = ({ picture, username, bio, lastMessage, time, isBlocked, isMuted, notification, hasStory }) => {
-
-	const [modalVisible, setModalVisible] = useState(false);
 	const navigation = useNavigation();
-
-	const showStoryCircle = () => {
-		if (hasStory) {
-			return {
-				borderColor: theme.colors.storyBorder,
-				borderWidth: 2
-			}
-		}
-	};
+	const {setCurrentChat} = useContext(userContext);
 
 	const showNotification = (type) => {
 		if (notification && type === "number") {
@@ -33,22 +23,16 @@ const ConversationItem = ({ picture, username, bio, lastMessage, time, isBlocked
 			}
 		}
 	};
-
 	return (
 		<View style={styles.container}>
 			<TouchableOpacity style={styles.conversation}
-			onPress={() => navigation.navigate('MessagesScreen', {
-				username: username,
-				bio: bio,
-				picture: picture,
-				isBlocked: isBlocked,
-				isMuted: isMuted
-			})}>
-				<TouchableOpacity 
-					onPress={() => setModalVisible(currentValue => !currentValue)}
-					style={[styles.imageContainer, showStoryCircle()]}>
-					<Image style={styles.image} source={{ uri: picture }} />
-				</TouchableOpacity>
+			onPress={() => {
+				navigation.navigate('MessagesScreen', {
+					username: username,
+					id:id
+				})
+				setCurrentChat(`${id}`)
+			}}>
 				<View style={{
 						flex: 1,
 						justifyContent: 'center'
@@ -58,7 +42,6 @@ const ConversationItem = ({ picture, username, bio, lastMessage, time, isBlocked
 						justifyContent: 'space-between'
 					}}>
 						<Text numerOfLine={1} style={styles.username}>{username}</Text>
-						<Text style={styles.time}>{time}</Text>
 					</View>
 					<View style={{
 						flexDirection: 'row',
@@ -69,16 +52,7 @@ const ConversationItem = ({ picture, username, bio, lastMessage, time, isBlocked
 					</View>
 				</View>
 			</TouchableOpacity>
-			<Modal animationType="slide" transparent visible={modalVisible}>
-				<ProfileInfo
-					username={username}
-					picture={picture}
-					bio={bio}
-					isBlocked={isBlocked}
-					isMuted={isMuted}
-					hide={() => setModalVisible(false)}
-				/>
-			</Modal>
+
 		</View>
 	)
 }

@@ -21,7 +21,7 @@ import { useKeyboard } from "@react-native-community/hooks";
 
 import { theme } from "../../theme";
 
-const ChatInput = ({ reply, closeReply, isLeft, username }) => {
+const ChatInput = ({ reply, closeReply, isLeft, username,sendMessage }) => {
 	const [message, setMessage] = useState("");
 	const [showEmojiPicker, setShowEmojiPicker] = useState(false);
 	const height = useSharedValue(70);
@@ -86,7 +86,7 @@ const ChatInput = ({ reply, closeReply, isLeft, username }) => {
 
 					</TouchableOpacity>
 				</View>
-				<TouchableOpacity style={styles.sendButton}>
+				<TouchableOpacity style={styles.sendButton} onPress={()=>sendMessage(message)}>
 
 				</TouchableOpacity>
 			</View>

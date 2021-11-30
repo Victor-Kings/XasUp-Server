@@ -1,21 +1,30 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import MessagesScreen from '../screens/MessagesScreen';
-
-import HomeNavigator from './HomeNavigator';
 import Header from '../components/common/Header';
-import ConversationsScreen from "../screens/ConversationsScreen";
 
+import MessagesScreen from '../screens/MessagesScreen';
+import ConversationsScreen from "../screens/ConversationsScreen";
+import MqttController from '../services/mqttController';
+import LoginScreen from '../screens/LoginScreen';
+import userContext from '../context/userContext';
 
 const Stack = createStackNavigator();
 
 const RootNavigator = () => {
+	const {user, updateMsg, userMsg} = useContext(userContext);
+
+	useEffect(()=>{
+		console.log("VEZ");
+		MqttController.init({topic:user?.id||"s"}, updateMsg,userMsg)
+	},[user])
+
 	return (
 		<Stack.Navigator 
-			initialRouteName="HomeScreen" 
+			initialRouteName="LoginScreen" 
 			screenOptions={{ headerShown: false }}
 		>
+			<Stack.Screen name="LoginScreen" component={LoginScreen} />
 			<Stack.Screen name="HomeScreen" component={ConversationsScreen} options={{
 				headerShown: true,
 				header: () => <Header title="Chat" />

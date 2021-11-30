@@ -1,26 +1,24 @@
 import React from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 
 import { theme } from '../../theme';
 
-const ChatHeader = ({ username, bio, picture, onlineStatus, onPress }) => {
+const ChatHeader = ({ username, onPress }) => {
 	return (
 		<View style={styles.container}>
-			<TouchableOpacity style={styles.backButton} onPress={onPress}>
-			</TouchableOpacity>
+			<View style={styles.backButton} onPress={onPress}>
+			</View>
 			<View style={styles.profileOptions}>
-				<TouchableOpacity style={styles.profile}>
-					<Image style={styles.image} source={{ uri: picture }} />
+				<View style={styles.profile}>
 					<View style={styles.usernameAndOnlineStatus}>
 						<Text style={styles.username}>{username}</Text>
-						<Text style={styles.onlineStatus}>{onlineStatus}</Text>
 					</View>
-				</TouchableOpacity>
+				</View>
 				<View style={styles.options}> 
-					<TouchableOpacity style={{ paddingHorizontal: 5 }}>
-					</TouchableOpacity>
-					<TouchableOpacity style={{ paddingHorizontal: 20 }}>
-					</TouchableOpacity>
+					<View style={{ paddingHorizontal: 5 }}>
+					</View>
+					<View style={{ paddingHorizontal: 20 }}>
+					</View>
 				</View>
 			</View>
 		</View>
@@ -64,7 +62,8 @@ const styles = StyleSheet.create({
 	username: {
 		color: theme.colors.white,
 		fontSize: 18,
-		fontWeight: 'bold'
+		fontWeight: 'bold',
+		paddingBottom: 20
 	},
 	onlineStatus: {
 		color: theme.colors.white,
