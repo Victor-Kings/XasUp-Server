@@ -17,9 +17,13 @@ var data = function (messageSet) {
     messageSet.forEach(function (m) {
         const message = JSON.parse(m.message.value.toString('utf8'))
         console.log(message);
-        console.log(message.topic);
+        console.log(`${message.topic}`);
         console.log(message.data);
-        client.publish(message.topic, message.data, { qos: 0, retain: false }, (error) => {
+        const payload = {
+            originTopic: message.originTopic,
+            data: message.data
+        }
+        client.publish(`${message.topic}`,JSON.stringify(payload), { qos: 0, retain: false }, (error) => {
             if (error) {
                 console.error(error)
             }
