@@ -5,8 +5,7 @@ import ProfileInfo from './common/ProfileInfo';
 
 import { theme } from '../theme';
 import userContext from '../context/userContext';
-const ConversationItem = ({  username,  lastMessage, notification, id }) => {
-
+const ConversationItem = ({  username,  lastMessage, notification, id, isGroup = false }) => {
 	const navigation = useNavigation();
 	const {setCurrentChat} = useContext(userContext);
 
@@ -29,7 +28,8 @@ const ConversationItem = ({  username,  lastMessage, notification, id }) => {
 			onPress={() => {
 				navigation.navigate('MessagesScreen', {
 					username: username,
-					id:id
+					id: id,
+					isGroup: isGroup,
 				})
 				setCurrentChat(`${id}`)
 			}}>
@@ -52,7 +52,6 @@ const ConversationItem = ({  username,  lastMessage, notification, id }) => {
 					</View>
 				</View>
 			</TouchableOpacity>
-
 		</View>
 	)
 }

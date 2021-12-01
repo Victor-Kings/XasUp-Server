@@ -14,7 +14,7 @@ import Animated, {
 
 import { theme } from "../../theme";
 
-const Message = ({ time, isLeft, message, onSwipe }) => {
+const Message = ({ time, isLeft, message, onSwipe, isGroup = false,name }) => {
 	const startingPosition = 0;
 	const x = useSharedValue(startingPosition);
 
@@ -28,6 +28,10 @@ const Message = ({ time, isLeft, message, onSwipe }) => {
 		} else if (isLeft && type === "message") {
 			return {
 				color: "#000",
+			};
+		}else if (isLeft && type === "name") {
+			return {
+				color: "#858585",
 			};
 		} else if (isLeft && type === "time") {
 			return {
@@ -57,7 +61,7 @@ const Message = ({ time, isLeft, message, onSwipe }) => {
 			transform: [{ translateX: x.value }]
 		}
 	});
-
+	console.log("\n\n\n\nisGroup:   ", isGroup, "--\n\n\n\n");
 	return (
 		<FlingGestureHandler
 			direction={isLeft ? Directions.RIGHT : Directions.LEFT}
@@ -74,8 +78,13 @@ const Message = ({ time, isLeft, message, onSwipe }) => {
 						styles.messageContainer,
 						isOnLeft("messageContainer"),
 					]}
-				>
+					>
 					<View style={styles.messageView}>
+						{isGroup &&
+							<Text style={[styles.name, isOnLeft("name")]}>
+								{name}
+							</Text>
+						}
 						<Text style={[styles.message, isOnLeft("message")]}>
 							{message}
 						</Text>
@@ -120,6 +129,11 @@ const styles = StyleSheet.create({
 		color: "white",
 		alignSelf: "flex-start",
 		fontSize: 15,
+	},
+	name: {
+		color: "#C2C2C2",
+		alignSelf: "flex-start",
+		fontSize: 10,
 	},
 	time: {
 		color: "lightgray",

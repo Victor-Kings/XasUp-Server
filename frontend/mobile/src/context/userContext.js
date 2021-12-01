@@ -1,23 +1,27 @@
-import React, { createContext, useState } from 'react'
+import React, { createContext, useEffect, useState } from 'react'
 import { FriendService } from '../services/FriendService/FriendService'
 import { UserService } from '../services/User/UserService'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { GroupService } from '../services/GroupService/GroupService';
 
 const userContext = createContext(null)
 
 export function UserProvider({ children }) {
   const [user, setUser] = useState(null)
   const [listFriends, setListFriends] = useState([])
+  const [listGroups, setListGroups] = useState([])
   const [userMsg, setUserMsg] = useState([])
+  const [groupMsg, setGroupMsg] = useState([])
   const [newMsg, setNewMsg] = useState({
     id: "213333000000", 
     data: {
       user: 9999999999,
       time: "11:00",
       content: "message.data",
+      name:"user.name"
     }
   })
-  console.log("VENDO USERMSG",userMsg);
+  console.log("VENDO groupMSG",groupMsg);
     //exemplo de obj
     // [
     //   {
@@ -27,19 +31,20 @@ export function UserProvider({ children }) {
       //   user: 0,
       //   time: "12:00",
       //   content: "Hey",
+      //   name:"victor"
       //     }
     //    ]
     // ]
           
   const [currentChat, setCurrentChat] = useState(null)
-  console.log("curr",currentChat);
   const signIn = async(id) => {
     const data = await new UserService().verifyUser(id) 
     if(data)  {
       setUser({id: id, name: data})  
       const friends = await new FriendService().getFriends(id)
-      console.log("AQUFRIENDSI",friends);
+      const groups = await new GroupService().getGroups(id)
       setListFriends(friends)
+      setListGroups(groups)
       return "logado"
     }
     return ""
@@ -53,26 +58,18 @@ export function UserProvider({ children }) {
     setListFriends([...listFriends, newFriends])
   }
 
-  const updateMsg = async(id, newMsg) => {
-    console.log("##############: ", userMsg, "@@@@: ", userMsg.length)
-    let auxArray = await AsyncStorage.getItem('@userMsg')
+  const updateMsg = async(id, newMsg,isGroup=false) => {
+    let auxArray = isGroup ? await AsyncStorage.getItem('@groupMsg') : await AsyncStorage.getItem('@userMsg')
     if(!auxArray){
       auxArray = []
     }else{
       auxArray = JSON.parse(auxArray)
     }
     let flag = 0
-    console.log("\n\n\n\n\nAUXARRAY",newMsg,"sodadij",userMsg);
-    auxArray.map((el)=>{
-      console.log(el," -- ");
-    })
-    console.log("\n\n\n\n");
-    console.log("EEEEEEEEEEEEEEEEEEEEEEE:", auxArray.length)
+
     auxArray.map((value, index)=>{
-      console.log("WWWWWWW", value.id, " :SS: ", id)
       if(`${value.id}` == `${id}`){
         flag = 1
-        console.log("XXX", newMsg);
         value.chatItms.push(newMsg)
       }
     })
@@ -82,16 +79,8 @@ export function UserProvider({ children }) {
         chatItms:[newMsg]
       }]
     }
-    console.log("\n\nauxArray\n\n",auxArray);
-
-    auxArray.map((el)=>{
-      console.log(el," -- ");
-    })
-    console.log("\n\n\n\n");
-    console.log("FFFFFFFFFFFFFFFFF", auxArray.length)
-    await AsyncStorage.setItem('@userMsg', JSON.stringify(auxArray))
-    setUserMsg(auxArray)
-    
+    isGroup ? await AsyncStorage.setItem('@groupMsg', JSON.stringify(auxArray)) : await AsyncStorage.setItem('@userMsg', JSON.stringify(auxArray))
+    isGroup ? setGroupMsg(auxArray) : setUserMsg(auxArray)
   }
 
   return (
@@ -106,7 +95,9 @@ export function UserProvider({ children }) {
         setCurrentChat,
         currentChat,
         setNewMsg,
-        newMsg
+        newMsg,
+        listGroups,
+        groupMsg
       }}
     >
       {children}

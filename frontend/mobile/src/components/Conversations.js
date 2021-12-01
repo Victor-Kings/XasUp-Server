@@ -5,7 +5,7 @@ import userContext from '../context/userContext';
 import ConversationItem from './ConversationItem';
 
 const Conversations = ({ children }) => {
-	const {listFriends} = useContext(userContext);
+	const {listFriends , listGroups} = useContext(userContext);
 	console.log("EPALISTPORAQUI",listFriends);
 	return (
 		<ScrollView>
@@ -16,6 +16,19 @@ const Conversations = ({ children }) => {
 						key={element.id}
 						username={element.name}
 						id={element.id}
+						lastMessage="Hello there"
+						notification="3"
+					/>
+				)
+
+			}
+			{
+				listGroups&&listGroups.map((element)=>
+					<ConversationItem
+						key={`${element.groupnameid}_GROUP`}
+						username={element.groupname}
+						isGroup={true}
+						id={`${element.groupnameid}_GROUP`}
 						lastMessage="Hello there"
 						notification="3"
 					/>

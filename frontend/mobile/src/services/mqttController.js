@@ -10,19 +10,19 @@ class MqttConnection {
         }).then(client => {
             client.on('message', msg => {
                 const message = JSON.parse(msg.data);   
-                console.log("messageaaaaa",message,message.data);
                 var currentTime = new Date();
                 currentTime = `${currentTime.getHours()}:${currentTime.getMinutes()}`;
                 const newMsg = {
                     user: 1,
                     time: currentTime,
                     content: message.data,
+                    name: message.originName
                 }
-                console.log("\n\n\nAUICHEGOU SIM \n\n\n", `${message.originTopic}`,newMsg);
-                console.log(userMsg)
+                console.log("RECEBEU AUQI EM", message);
                 updateMsg(
                     message.originTopic.toString(),
-                    newMsg
+                    newMsg,
+                    message.originTopic.toString().includes("_GROUP") ? true : false
                 )
             });
             client.on('connect', function () {

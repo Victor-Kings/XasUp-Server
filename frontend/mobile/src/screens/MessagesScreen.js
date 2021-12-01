@@ -10,11 +10,11 @@ import MessagesList from "../components/messages/MessagesList";
 import userContext from "../context/userContext";
 
 const MessagesScreen = ({ navigation, route }) => {
-	const {currentChat, updateMsg, userMsg, user, newMsg } = useContext(userContext);
+	const {currentChat, updateMsg, userMsg, user, newMsg, groupMsg } = useContext(userContext);
+	const { username, id, isGroup, } = route.params;
 
 	const [messages, setMessages] = useState([]);
 	const [ alredyMount, setAlredyMount] = useState(false);
-	const { username, id } = route.params;
 	const [reply, setReply] = useState("");
 	const [isLeft, setIsLeft] = useState();
 
@@ -37,6 +37,7 @@ const MessagesScreen = ({ navigation, route }) => {
 				time: currentTime,
 				user: 0,
 				content: msg,
+				name: user.name
 			}])
 			updateMsg(
 				`${id}`,
@@ -44,10 +45,14 @@ const MessagesScreen = ({ navigation, route }) => {
 					user: 0,
 					time: currentTime,
 					content: msg,
-				}
+					name: user.name
+
+				},
+				isGroup
 			)
 			MqttController.sendMessage('baeldung', {
 				originTopic: user.id,
+				originName: user.name,
 				topic: id,
 				data: msg
 			});
@@ -56,7 +61,9 @@ const MessagesScreen = ({ navigation, route }) => {
 
 	const walkChatToSet=()=>{
 		let flag = 0
-		userMsg.map((value, index) => {
+		console.log(isGroup);
+		const arrayMsg = isGroup ? [...groupMsg] : [...userMsg]
+		arrayMsg.map((value, index) => {
 			console.log("\n\n\ncurrentChat\n\n\n",id);
 			if(`${value.id}` == `${id}`){
 				console.log("\n\n\nchatItms\n\n\n",value.chatItms,"\n\n\n\n");
@@ -85,7 +92,7 @@ const MessagesScreen = ({ navigation, route }) => {
 	useEffect(()=>{
 		console.log("eeqeeqqeeqq");
 		walkChatToSet()
-	}, [userMsg])
+	}, [userMsg, groupMsg])
 
 	return (
 		<View style={{ flex: 1 }}>
@@ -94,6 +101,7 @@ const MessagesScreen = ({ navigation, route }) => {
 				username={username}
 			/>
 			<MessagesList 
+				isGroup={isGroup}
 				onSwipeToReply={swipeToReply} 
 				messages={messages}
 			/>

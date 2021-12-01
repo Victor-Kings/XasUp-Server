@@ -7,11 +7,7 @@ export class UserService{
         return response;
     }
     verifyUser = async(userId) => {
-        console.log("CHEGOU",userId);
-        console.log("XXXX", apiBackend)
-    
         const response = await axios.get(`http://192.168.0.103:3333/user/${userId}`)
-        console.log("reponse",response);
         return response.data;   
     }
 }

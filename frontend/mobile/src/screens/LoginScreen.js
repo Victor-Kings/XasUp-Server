@@ -14,8 +14,8 @@ const LoginScreen = ({ navigation }) => {
 
 	const eventSignIn = async () =>{
 		console.log("LOGANDO");
-    	//const status = await signIn(idInput); 
-    	//console.log(status);
+    	const status = await signIn(idInput); 
+    	console.log(status);
 		navigation.navigate("HomeScreen")
 	}
 	const eventRegister = async () =>{

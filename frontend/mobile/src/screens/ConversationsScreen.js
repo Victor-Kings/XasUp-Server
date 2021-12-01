@@ -10,12 +10,9 @@ const ConversationsScreen = () => {
 
 	return (
 		<View style={{ backgroundColor: theme.colors.white, flex: 1 }}>
-				<Conversations>
-				</Conversations>
-				<TouchableOpacity onPress={() => { }} style={fabStyles.styleNewGroup}>
-				</TouchableOpacity>
-				<TouchableOpacity onPress={() => { }} style={fabStyles.styleAddFriend}>
-				</TouchableOpacity>
+				<Conversations/>
+				<TouchableOpacity onPress={() => { }} style={fabStyles.styleNewGroup}/>
+				<TouchableOpacity onPress={() => { }} style={fabStyles.styleAddFriend}/>
 		</View>
 	)
 }

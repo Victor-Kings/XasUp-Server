@@ -6,7 +6,7 @@ import Message from "./Message";
 import { theme } from "../../theme";
 import userContext from "../../context/userContext";
 
-const MessagesList = ({ onSwipeToReply, messages }) => {
+const MessagesList = ({ onSwipeToReply, messages, isGroup = false }) => {
 	const userRef = useRef(0);
 	const scrollView = useRef();
 
@@ -19,11 +19,13 @@ const MessagesList = ({ onSwipeToReply, messages }) => {
 		> 
 			{messages&&messages.map((message, index) => (
 				<Message
+					isGroup = {isGroup}
 					key={index}
 					time={message.time}
 					isLeft={message.user !== userRef.current}
 					message={message.content}
 					onSwipe={onSwipeToReply}
+					name={message.name}
 				/>
 			))}
 		</ScrollView>
