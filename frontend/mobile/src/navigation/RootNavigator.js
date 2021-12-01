@@ -7,6 +7,7 @@ import MessagesScreen from '../screens/MessagesScreen';
 import ConversationsScreen from "../screens/ConversationsScreen";
 import MqttController from '../services/mqttController';
 import LoginScreen from '../screens/LoginScreen';
+import RegisterScreen from '../screens/RegisterScreen';
 import userContext from '../context/userContext';
 
 const Stack = createStackNavigator();
@@ -25,6 +26,7 @@ const RootNavigator = () => {
 			screenOptions={{ headerShown: false }}
 		>
 			<Stack.Screen name="LoginScreen" component={LoginScreen} />
+			<Stack.Screen name="RegisterScreen" component={RegisterScreen} />
 			<Stack.Screen name="HomeScreen" component={ConversationsScreen} options={{
 				headerShown: true,
 				header: () => <Header title="Chat" />

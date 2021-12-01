@@ -14,6 +14,12 @@ export const authStyles = StyleSheet.create({
 		flexDirection: 'row',
 		justifyContent: 'center'
 	},
+	buttonRegister: {
+		flexDirection: 'row',
+		justifyContent: 'center',
+		marginHorizontal: 30,
+		paddingHorizontal: 10
+	},
 	signUp: {
 		alignSelf: 'center',
 		color: 'darkgray',
@@ -34,7 +40,23 @@ export const inputStyles = StyleSheet.create({
 });
 
 export const fabStyles = StyleSheet.create({
-	style: {
+	styleNewGroup: {
+		alignItems: "center",
+		justifyContent: "center",
+		width: 60,
+		height: 60,
+		position: 'absolute',
+		bottom: 80,
+		right: 10,
+		backgroundColor: theme.colors.black,
+		borderRadius: 100,
+		elevation: 5,
+		shadowColor: theme.colors.primary,
+		shadowOpacity: 0.4,
+		shadowRadius: 5,
+		shadowOffset: { width: 0, height: 2 },
+	},
+	styleAddFriend: {
 		alignItems: "center",
 		justifyContent: "center",
 		width: 60,
@@ -42,12 +64,12 @@ export const fabStyles = StyleSheet.create({
 		position: 'absolute',
 		bottom: 10,
 		right: 10,
-		backgroundColor: theme.colors.white,
+		backgroundColor: theme.colors.black,
 		borderRadius: 100,
 		elevation: 5,
 		shadowColor: theme.colors.primary,
 		shadowOpacity: 0.4,
 		shadowRadius: 5,
-		shadowOffset: { width: 0, height: 2 }
+		shadowOffset: { width: 0, height: 2 },
 	}
 })

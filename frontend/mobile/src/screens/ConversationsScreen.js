@@ -1,19 +1,21 @@
-import React from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
+import React, { useState } from "react";
+import { View, Text, TouchableOpacity, Modal } from 'react-native'
 import Conversations from '../components/Conversations';
-import SearchInput from '../components/common/SearchInput';
 
 import { theme } from '../theme';
 import { fabStyles } from '../styles';
 
 const ConversationsScreen = () => {
+
+
 	return (
 		<View style={{ backgroundColor: theme.colors.white, flex: 1 }}>
-			<Conversations>
-				<SearchInput />
-			</Conversations>
-			<TouchableOpacity onPress={() => {}} style={fabStyles.style}>
-			</TouchableOpacity>
+				<Conversations>
+				</Conversations>
+				<TouchableOpacity onPress={() => { }} style={fabStyles.styleNewGroup}>
+				</TouchableOpacity>
+				<TouchableOpacity onPress={() => { }} style={fabStyles.styleAddFriend}>
+				</TouchableOpacity>
 		</View>
 	)
 }

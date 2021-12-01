@@ -8,7 +8,7 @@ import Header from '../components/auth/Header';
 import AppButton from '../components/auth/AppButton';
 import userContext from '../context/userContext';
 
-const LoginScreen = ({ navigation }) => {
+const RegisterScreen = ({ navigation }) => {
 	const {signIn} = useContext(userContext);
 	const [idInput, setIdInput] = useState();
 
@@ -18,31 +18,19 @@ const LoginScreen = ({ navigation }) => {
     	//console.log(status);
 		navigation.navigate("HomeScreen")
 	}
-	const eventRegister = async () =>{
-		console.log("Cadastrando");
-    	//const status = await signIn(idInput); 
-    	//console.log(status);
-		navigation.navigate("RegisterScreen")
-	}
 	return (
 		<View style={authStyles.container}>
 			<View style={authStyles.form}>
-				<Header title="Login" />
+				<Header title="Cadastramento" />
                 <View style={styles.mainContainer}>
-                    <TextInput style={styles.input}  keyboardType='numeric' onChangeText={(text)=>setIdInput(text)}/>
+                    <TextInput placeholder="nome" style={styles.input}  keyboardType='numeric' onChangeText={(text)=>setIdInput(text)}/>
                 </View>
 			</View>
-				<Button 
-					style={authStyles.buttonRegister}
-					onPress={() => eventRegister()} 
-					color={theme.colors.primary} 
-					title="Cadastrar" 
-				/>
 			<View style={authStyles.buttonContainer}>
 				<AppButton 
 					onPress={() => eventSignIn()} 
 					color={theme.colors.primary} 
-					title="Log in" 
+					title="Cadastrar" 
 				/>
 			</View>
 		</View>
@@ -52,9 +40,9 @@ const LoginScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
     mainContainer:{
         flex: 1,
-        maxHeight: 50,
+        maxHeight: 80,
         alignSelf: 'center',
-        width: 100
+        width: 200
 
     },
 	input: {
@@ -63,9 +51,11 @@ const styles = StyleSheet.create({
 		color: theme.colors.black,
 		width: '100%',
 		fontSize: 20,
-        borderRadius: 5
+        borderRadius: 5,
+        marginBottom: 30,
+        textAlign: 'center'
 	}
 	
 })
 
-export default LoginScreen;
+export default RegisterScreen;
