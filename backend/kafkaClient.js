@@ -21,7 +21,8 @@ var data = function (messageSet) {
         console.log(message.data);
         const payload = {
             originTopic: message.originTopic,
-            data: message.data
+            data: message.data,
+            originName: message.originName
         }
         client.publish(`${message.topic}`,JSON.stringify(payload), { qos: 0, retain: false }, (error) => {
             if (error) {
