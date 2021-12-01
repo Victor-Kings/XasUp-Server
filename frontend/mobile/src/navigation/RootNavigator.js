@@ -13,11 +13,11 @@ import userContext from '../context/userContext';
 const Stack = createStackNavigator();
 
 const RootNavigator = () => {
-	const {user, updateMsg, userMsg} = useContext(userContext);
+	const {user, updateMsg, setVisualizedMsg} = useContext(userContext);
 
 	useEffect(()=>{
 		console.log("VEZ");
-		MqttController.init({topic:user?.id||"s"}, updateMsg,userMsg)
+		MqttController.init({topic:user?.id||"s"}, updateMsg, setVisualizedMsg)
 	},[user])
 
 	return (

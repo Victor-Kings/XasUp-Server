@@ -14,7 +14,7 @@ import Animated, {
 
 import { theme } from "../../theme";
 
-const Message = ({ time, isLeft, message, onSwipe, isGroup = false,name }) => {
+const Message = ({ time, isLeft, message, onSwipe, isGroup = false, name, isVisualized = false }) => {
 	const startingPosition = 0;
 	const x = useSharedValue(startingPosition);
 
@@ -88,6 +88,11 @@ const Message = ({ time, isLeft, message, onSwipe, isGroup = false,name }) => {
 						<Text style={[styles.message, isOnLeft("message")]}>
 							{message}
 						</Text>
+						{!isGroup && !isLeft &&
+							<Text style={[styles.name, isOnLeft("name")]}>
+								{isVisualized?"Visualizada":"Não Visualizada"}
+							</Text>
+						}
 					</View>
 					<View style={styles.timeView}>
 						<Text style={[styles.time, isOnLeft("time")]}>

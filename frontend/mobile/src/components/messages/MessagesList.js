@@ -19,6 +19,7 @@ const MessagesList = ({ onSwipeToReply, messages, isGroup = false }) => {
 		> 
 			{messages&&messages.map((message, index) => (
 				<Message
+				    isVisualized={message.visualized}
 					isGroup = {isGroup}
 					key={index}
 					time={message.time}

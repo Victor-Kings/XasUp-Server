@@ -20,7 +20,6 @@ const Conversations = ({ children }) => {
 						notification="3"
 					/>
 				)
-
 			}
 			{
 				listGroups&&listGroups.map((element)=>

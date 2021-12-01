@@ -10,9 +10,9 @@ import MessagesList from "../components/messages/MessagesList";
 import userContext from "../context/userContext";
 
 const MessagesScreen = ({ navigation, route }) => {
-	const {currentChat, updateMsg, userMsg, user, newMsg, groupMsg } = useContext(userContext);
+	const { updateMsg, userMsg, user, sendVisualizedMsg, groupMsg } = useContext(userContext);
 	const { username, id, isGroup, } = route.params;
-
+	
 	const [messages, setMessages] = useState([]);
 	const [ alredyMount, setAlredyMount] = useState(false);
 	const [reply, setReply] = useState("");
@@ -28,7 +28,6 @@ const MessagesScreen = ({ navigation, route }) => {
 	};
 
 	const updateMessage = (msg) => {
-		console.log("CHEGOU AQUI", msg,user.id,id);
 		var currentTime = new Date();
 		currentTime = `${currentTime.getHours()}:${currentTime.getMinutes()}`;
 
@@ -37,7 +36,8 @@ const MessagesScreen = ({ navigation, route }) => {
 				time: currentTime,
 				user: 0,
 				content: msg,
-				name: user.name
+				name: user.name,
+    		    visualized: false,
 			}])
 			updateMsg(
 				`${id}`,
@@ -45,8 +45,8 @@ const MessagesScreen = ({ navigation, route }) => {
 					user: 0,
 					time: currentTime,
 					content: msg,
-					name: user.name
-
+					name: user.name,
+					visualized: false
 				},
 				isGroup
 			)
@@ -61,37 +61,26 @@ const MessagesScreen = ({ navigation, route }) => {
 
 	const walkChatToSet=()=>{
 		let flag = 0
-		console.log(isGroup);
 		const arrayMsg = isGroup ? [...groupMsg] : [...userMsg]
 		arrayMsg.map((value, index) => {
-			console.log("\n\n\ncurrentChat\n\n\n",id);
 			if(`${value.id}` == `${id}`){
-				console.log("\n\n\nchatItms\n\n\n",value.chatItms,"\n\n\n\n");
 				flag = 1
 				setMessages(value.chatItms)
 			}
 		})
-		
 		if(flag == 0){
 			setMessages([])
 		}
 		setAlredyMount(true)
 	}
-	
-	// useEffect(()=>{
-	// 	console.log("ioiooooo")
-	// 	console.log("ERAR");
-	// 	walkChatToSet();
-	// }, [])
 
 	useEffect(()=>{
-		console.log("ioioi");
 		walkChatToSet()
 	}, [])
 
 	useEffect(()=>{
-		console.log("eeqeeqqeeqq");
 		walkChatToSet()
+		sendVisualizedMsg(`${id}`)
 	}, [userMsg, groupMsg])
 
 	return (

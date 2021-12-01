@@ -2,7 +2,7 @@ import MQTT from 'sp-react-native-mqtt';
 var cli = null;
 
 class MqttConnection {
-    init(props, updateMsg , userMsg) {
+    init(props, updateMsg, setVisualizedMsg) {
         console.log(MQTT);
         MQTT.createClient({
             uri: 'mqtt://192.168.0.103:1883',
@@ -10,20 +10,26 @@ class MqttConnection {
         }).then(client => {
             client.on('message', msg => {
                 const message = JSON.parse(msg.data);   
-                var currentTime = new Date();
-                currentTime = `${currentTime.getHours()}:${currentTime.getMinutes()}`;
-                const newMsg = {
-                    user: 1,
-                    time: currentTime,
-                    content: message.data,
-                    name: message.originName
-                }
                 console.log("RECEBEU AUQI EM", message);
-                updateMsg(
-                    message.originTopic.toString(),
-                    newMsg,
-                    message.originTopic.toString().includes("_GROUP") ? true : false
-                )
+                if(message.data==`${message.originTopic}_Visualized`) {
+                    console.log("OPA");
+                    setVisualizedMsg(message.originTopic.toString())
+                }else {
+                    console.log("EPA");
+                    var currentTime = new Date();
+                    currentTime = `${currentTime.getHours()}:${currentTime.getMinutes()}`;
+                    const newMsg = {
+                        user: 1,
+                        time: currentTime,
+                        content: message.data,
+                        name: message.originName
+                    }
+                    updateMsg(
+                        message.originTopic.toString(),
+                        newMsg,
+                        message.originTopic.toString().includes("_GROUP") ? true : false
+                    )
+                }
             });
             client.on('connect', function () {
                 console.log('connected');
@@ -31,7 +37,7 @@ class MqttConnection {
                 cli = client;
             });
             client.connect();
-        }).finally(()=>{console.log(".....................:", userMsg)});
+        })
     }   
 
   sendMessage(topic, message) {

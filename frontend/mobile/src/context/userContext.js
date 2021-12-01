@@ -3,6 +3,7 @@ import { FriendService } from '../services/FriendService/FriendService'
 import { UserService } from '../services/User/UserService'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { GroupService } from '../services/GroupService/GroupService';
+import MqttController from '../services/mqttController';
 
 const userContext = createContext(null)
 
@@ -27,13 +28,15 @@ export function UserProvider({ children }) {
     //   {
     //     id: 2,
     //     chatItms: [ 
-      //   {
-      //   user: 0,
-      //   time: "12:00",
-      //   content: "Hey",
-      //   name:"victor"
-      //     }
-    //    ]
+    //                 {
+    //                    user: 0,
+    //                    time: "12:00",
+    //                    content: "Hey",
+    //                    name:"victor",
+    //                    visualized: false
+    //                  }
+    //               ]
+    //    }
     // ]
           
   const [currentChat, setCurrentChat] = useState(null)
@@ -83,6 +86,37 @@ export function UserProvider({ children }) {
     isGroup ? setGroupMsg(auxArray) : setUserMsg(auxArray)
   }
 
+  const sendVisualizedMsg = (topicId) => {
+    MqttController.sendMessage('baeldung', {
+      originTopic: user.id,
+      originName: user.name,
+      topic: topicId,
+      data: `${user.id}_Visualized`
+    });
+  }
+
+  const setVisualizedMsg = async (originId) => {
+    let auxArray = await AsyncStorage.getItem('@userMsg')
+ 
+    auxArray = JSON.parse(auxArray)
+
+    auxArray.map((value) => {
+      console.log("AOBAAuxArray--ANTES", value);
+      if(`${value.id}` == `${originId}`){
+        value.chatItms.map((element)=>{
+          element.visualized = true
+        })
+      }
+    })
+
+    auxArray.map((value)=>{
+      console.log("AOBAAuxArray", value);
+    })
+    
+    await AsyncStorage.setItem('@userMsg', JSON.stringify(auxArray))
+    setUserMsg(auxArray)
+  }
+
   return (
     <userContext.Provider
       value={{
@@ -97,7 +131,9 @@ export function UserProvider({ children }) {
         setNewMsg,
         newMsg,
         listGroups,
-        groupMsg
+        groupMsg,
+        sendVisualizedMsg,
+        setVisualizedMsg
       }}
     >
       {children}

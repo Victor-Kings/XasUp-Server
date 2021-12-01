@@ -7,7 +7,7 @@ import { theme } from '../theme';
 import userContext from '../context/userContext';
 const ConversationItem = ({  username,  lastMessage, notification, id, isGroup = false }) => {
 	const navigation = useNavigation();
-	const {setCurrentChat} = useContext(userContext);
+	const {setCurrentChat, sendVisualizedMsg} = useContext(userContext);
 
 	const showNotification = (type) => {
 		if (notification && type === "number") {
@@ -32,6 +32,7 @@ const ConversationItem = ({  username,  lastMessage, notification, id, isGroup =
 					isGroup: isGroup,
 				})
 				setCurrentChat(`${id}`)
+				sendVisualizedMsg(`${id}`)
 			}}>
 				<View style={{
 						flex: 1,
