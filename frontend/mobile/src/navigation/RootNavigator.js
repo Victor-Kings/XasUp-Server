@@ -16,7 +16,6 @@ const RootNavigator = () => {
 	const {user, updateMsg, setVisualizedMsg} = useContext(userContext);
 
 	useEffect(()=>{
-		console.log("VEZ");
 		MqttController.init({topic:user?.id||"s"}, updateMsg, setVisualizedMsg)
 	},[user])
 

@@ -10,12 +10,9 @@ class MqttConnection {
         }).then(client => {
             client.on('message', msg => {
                 const message = JSON.parse(msg.data);   
-                console.log("RECEBEU AUQI EM", message);
                 if(message.data==`${message.originTopic}_Visualized`) {
-                    console.log("OPA");
                     setVisualizedMsg(message.originTopic.toString())
                 }else {
-                    console.log("EPA");
                     var currentTime = new Date();
                     currentTime = `${currentTime.getHours()}:${currentTime.getMinutes()}`;
                     const newMsg = {

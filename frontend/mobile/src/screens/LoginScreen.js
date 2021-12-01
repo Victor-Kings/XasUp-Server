@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react'
 import { View, StyleSheet, TextInput, Button } from 'react-native'
 
-import { authStyles, inputStyles } from '../styles';
+import { authStyles } from '../styles';
 import { theme } from '../theme';
 
 import Header from '../components/auth/Header';

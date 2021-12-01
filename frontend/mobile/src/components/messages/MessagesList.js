@@ -1,10 +1,9 @@
-import React, { useState, useRef, useContext, useEffect } from "react";
+import React, { useRef } from "react";
 import { ScrollView } from "react-native";
 
 import Message from "./Message";
 
 import { theme } from "../../theme";
-import userContext from "../../context/userContext";
 
 const MessagesList = ({ onSwipeToReply, messages, isGroup = false }) => {
 	const userRef = useRef(0);

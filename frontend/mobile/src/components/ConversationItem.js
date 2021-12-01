@@ -1,7 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, Image, Modal } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
-import ProfileInfo from './common/ProfileInfo';
 
 import { theme } from '../theme';
 import userContext from '../context/userContext';

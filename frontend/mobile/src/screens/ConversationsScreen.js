@@ -7,7 +7,6 @@ import { fabStyles } from '../styles';
 
 const ConversationsScreen = () => {
 
-
 	return (
 		<View style={{ backgroundColor: theme.colors.white, flex: 1 }}>
 				<Conversations/>

@@ -6,7 +6,6 @@ import ConversationItem from './ConversationItem';
 
 const Conversations = ({ children }) => {
 	const {listFriends , listGroups} = useContext(userContext);
-	console.log("EPALISTPORAQUI",listFriends);
 	return (
 		<ScrollView>
 			{children}

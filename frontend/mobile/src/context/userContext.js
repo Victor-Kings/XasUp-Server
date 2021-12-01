@@ -101,16 +101,11 @@ export function UserProvider({ children }) {
     auxArray = JSON.parse(auxArray)
 
     auxArray.map((value) => {
-      console.log("AOBAAuxArray--ANTES", value);
       if(`${value.id}` == `${originId}`){
         value.chatItms.map((element)=>{
           element.visualized = true
         })
       }
-    })
-
-    auxArray.map((value)=>{
-      console.log("AOBAAuxArray", value);
     })
     
     await AsyncStorage.setItem('@userMsg', JSON.stringify(auxArray))

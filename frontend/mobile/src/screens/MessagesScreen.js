@@ -1,6 +1,5 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
-import { View, Text } from "react-native";
-import { useFocusEffect } from '@react-navigation/native';
+import React, { useContext, useEffect, useState } from "react";
+import { View } from "react-native";
 
 import MqttController from "../services/mqttController";
 
