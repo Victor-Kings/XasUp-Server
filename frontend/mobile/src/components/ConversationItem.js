@@ -1,26 +1,13 @@
 import React, { useContext } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, Image, Modal } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 
 import { theme } from '../theme';
 import userContext from '../context/userContext';
-const ConversationItem = ({  username,  lastMessage, notification, id, isGroup = false }) => {
+const ConversationItem = ({  username, id, isGroup = false }) => {
 	const navigation = useNavigation();
-	const {setCurrentChat, sendVisualizedMsg} = useContext(userContext);
+	const {setCurrentChat, sendVisualizedMsg, userMsg} = useContext(userContext);
 
-	const showNotification = (type) => {
-		if (notification && type === "number") {
-			return (
-				<View style={styles.notificationCircle}>
-					<Text style={styles.notification}>{notification}</Text>
-				</View>
-			);
-		} else if (notification && type === "imageCircle") {
-			return {
-				borderColor: theme.colors.primary
-			}
-		}
-	};
 	return (
 		<View style={styles.container}>
 			<TouchableOpacity style={styles.conversation}
@@ -47,8 +34,16 @@ const ConversationItem = ({  username,  lastMessage, notification, id, isGroup =
 						flexDirection: 'row',
 						justifyContent: 'space-between'
 					}}>
-						<Text style={styles.message}>{lastMessage}</Text>
-						{showNotification('number')}
+						<Text style={styles.message}>
+							{userMsg?.map((value)=>{
+								if(value.id == id){
+									if(value.chatItms && value.chatItms.length > 0){
+										return value.chatItms[value.chatItms.length - 1].content
+									}
+								}
+								return ""
+							})}			
+						</Text>
 					</View>
 				</View>
 			</TouchableOpacity>
@@ -99,8 +94,7 @@ const styles = StyleSheet.create({
 		backgroundColor: theme.colors.primary,
 		borderRadius: 50,
 		height: 20,
-		width: 20,
-		marginRight: 5,
+		width: 35,
 		alignItems: 'center',
 		justifyContent: 'center'
 	},

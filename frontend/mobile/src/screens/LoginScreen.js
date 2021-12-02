@@ -20,8 +20,6 @@ const LoginScreen = ({ navigation }) => {
 	}
 	const eventRegister = async () =>{
 		console.log("Cadastrando");
-    	//const status = await signIn(idInput); 
-    	//console.log(status);
 		navigation.navigate("RegisterScreen")
 	}
 	return (

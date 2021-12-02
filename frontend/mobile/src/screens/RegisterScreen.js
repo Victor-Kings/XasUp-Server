@@ -9,26 +9,29 @@ import AppButton from '../components/auth/AppButton';
 import userContext from '../context/userContext';
 
 const RegisterScreen = ({ navigation }) => {
-	const {signIn} = useContext(userContext);
-	const [idInput, setIdInput] = useState();
+	const {register} = useContext(userContext);
+	const [nameInput, setNameInput] = useState();
 
-	const eventSignIn = async () =>{
+	const eventRegister = async () =>{
 		console.log("LOGANDO");
-    	//const status = await signIn(idInput); 
-    	//console.log(status);
-		navigation.navigate("HomeScreen")
+    	const status = await register(nameInput); 
+		console.log("REGISTRANDO",status);
+		if(status == "logado"){
+			navigation.navigate("HomeScreen")
+		}
 	}
+
 	return (
 		<View style={authStyles.container}>
 			<View style={authStyles.form}>
 				<Header title="Cadastramento" />
                 <View style={styles.mainContainer}>
-                    <TextInput placeholder="nome" style={styles.input}  keyboardType='numeric' onChangeText={(text)=>setIdInput(text)}/>
+                    <TextInput placeholder="nome" style={styles.input}  keyboardType='numeric' onChangeText={(text)=>setNameInput(text)}/>
                 </View>
 			</View>
 			<View style={authStyles.buttonContainer}>
 				<AppButton 
-					onPress={() => eventSignIn()} 
+					onPress={() => eventRegister()} 
 					color={theme.colors.primary} 
 					title="Cadastrar" 
 				/>

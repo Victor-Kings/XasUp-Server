@@ -4,8 +4,8 @@ const db = require("../repositories/db");
 exports.post = async (req, res, next) => {
     console.log(req.body);
     const name = req.body.name
-    await db.insertUser(name);
-    res.status(201).send('Success');
+    const result = await db.insertUser(name);
+    res.status(200).send(result);
 };
 
 exports.createFriend = async (req, res, next) => {

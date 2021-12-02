@@ -21,9 +21,9 @@ async function selectUser(id) {
 
 async function insertUser(name){
     const client = await connect();
-    const sql = 'INSERT INTO users(name) VALUES ($1);';
+    let sql = 'INSERT INTO users(name) VALUES ($1) returning id;';
     const values = [name];
-    return await client.query(sql, values);
+    return (await client.query(sql, values)).rows[0];
 }
 
 async function createFriend(param){

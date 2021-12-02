@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Modal } from 'react-native'
+import React from "react";
+import { View, TouchableOpacity } from 'react-native'
 import Conversations from '../components/Conversations';
 
 import { theme } from '../theme';

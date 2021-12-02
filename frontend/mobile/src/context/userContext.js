@@ -15,6 +15,7 @@ export function UserProvider({ children }) {
   const [groupMsg, setGroupMsg] = useState([])
   const [newMsg, setNewMsg] = useState({
     id: "213333000000", 
+    newMessage: false,
     data: {
       user: 9999999999,
       time: "11:00",
@@ -22,22 +23,22 @@ export function UserProvider({ children }) {
       name:"user.name"
     }
   })
-  console.log("VENDO groupMSG",groupMsg);
-    //exemplo de obj
-    // [
-    //   {
-    //     id: 2,
-    //     chatItms: [ 
-    //                 {
-    //                    user: 0,
-    //                    time: "12:00",
-    //                    content: "Hey",
-    //                    name:"victor",
-    //                    visualized: false
-    //                  }
-    //               ]
-    //    }
-    // ]
+  //exemplo de obj
+  // [
+  //   {
+  //     id: 2,
+  //     newMessage: false,
+  //     chatItms: [ 
+  //                 {
+  //                    user: 0,
+  //                    time: "12:00",
+  //                    content: "Hey",
+  //                    name:"victor",
+  //                    visualized: false
+  //                  }
+  //               ]
+  //    }
+  // ]
           
   const [currentChat, setCurrentChat] = useState(null)
   const signIn = async(id) => {
@@ -53,15 +54,23 @@ export function UserProvider({ children }) {
     return ""
   }
 
-  const register = () => {
-
+  const register = async(name) => {
+    const data = await new UserService().newUser(name)
+    if(data){
+      console.log("DATA.", data);
+      setUser({id: data.id, name: name}) 
+      setListFriends([])
+      setListGroups([])
+      return "logado"
+    }
+    return ""
   }
 
   const updateListFriends =(newFriends) => {
     setListFriends([...listFriends, newFriends])
   }
 
-  const updateMsg = async(id, newMsg,isGroup=false) => {
+  const updateMsg = async(id, newMsg, isGroup=false) => {
     let auxArray = isGroup ? await AsyncStorage.getItem('@groupMsg') : await AsyncStorage.getItem('@userMsg')
     if(!auxArray){
       auxArray = []
@@ -76,8 +85,10 @@ export function UserProvider({ children }) {
         value.chatItms.push(newMsg)
       }
     })
+
     if(flag==0){
       auxArray=[...auxArray,{
+				newMessage: false,
         id: `${id}`,
         chatItms:[newMsg]
       }]
@@ -128,7 +139,8 @@ export function UserProvider({ children }) {
         listGroups,
         groupMsg,
         sendVisualizedMsg,
-        setVisualizedMsg
+        setVisualizedMsg,
+        register,
       }}
     >
       {children}

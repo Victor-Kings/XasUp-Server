@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { ScrollView } from 'react-native'
 import userContext from '../context/userContext';
 
@@ -6,29 +6,27 @@ import ConversationItem from './ConversationItem';
 
 const Conversations = ({ children }) => {
 	const {listFriends , listGroups} = useContext(userContext);
+
 	return (
 		<ScrollView>
 			{children}
 			{
-				listFriends&&listFriends.map((element)=>
+				listFriends?.map((element)=>
 					<ConversationItem
-						key={element.id}
+						key={`${element.id}_name`}
 						username={element.name}
 						id={element.id}
-						lastMessage="Hello there"
-						notification="3"
 					/>
+				
 				)
 			}
 			{
-				listGroups&&listGroups.map((element)=>
+				listGroups?.map((element)=>
 					<ConversationItem
 						key={`${element.groupnameid}_GROUP`}
 						username={element.groupname}
 						isGroup={true}
 						id={`${element.groupnameid}_GROUP`}
-						lastMessage="Hello there"
-						notification="3"
 					/>
 				)
 			}
