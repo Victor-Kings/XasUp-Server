@@ -48,7 +48,7 @@ export const fabStyles = StyleSheet.create({
 		position: 'absolute',
 		bottom: 80,
 		right: 10,
-		backgroundColor: theme.colors.black,
+		backgroundColor: "#4197e5",
 		borderRadius: 100,
 		elevation: 5,
 		shadowColor: theme.colors.primary,
@@ -57,19 +57,12 @@ export const fabStyles = StyleSheet.create({
 		shadowOffset: { width: 0, height: 2 },
 	},
 	styleAddFriend: {
-		alignItems: "center",
-		justifyContent: "center",
-		width: 60,
-		height: 60,
-		position: 'absolute',
 		bottom: 10,
-		right: 10,
-		backgroundColor: theme.colors.black,
-		borderRadius: 100,
-		elevation: 5,
-		shadowColor: theme.colors.primary,
-		shadowOpacity: 0.4,
-		shadowRadius: 5,
-		shadowOffset: { width: 0, height: 2 },
+	},
+	image: {
+		display: "flex",
+		height: '60%',
+		width: '60%',
+		resizeMode: 'stretch'
 	}
 })
