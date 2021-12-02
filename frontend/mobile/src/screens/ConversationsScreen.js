@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native'
+import { View, Image, TouchableOpacity } from 'react-native'
 import Conversations from '../components/Conversations';
 import ModalAddFriend from "../components/Modals/ModalAddFriend";
 import ModalNewGroup from "../components/Modals/ModalNewGroup";
@@ -8,9 +8,8 @@ import { fabStyles } from '../styles';
 
 const ConversationsScreen = () => {
 
-
 	const [showModalAddFriend, setShowModalAddFriend] = useState(false);
-	const [showModalNewGroup, setShowModalNewGroup] = useState(true);
+	const [showModalNewGroup, setShowModalNewGroup] = useState(false);
 
 	const closeModalAddFriend = () => {
 		setShowModalAddFriend(false)
@@ -22,7 +21,7 @@ const ConversationsScreen = () => {
 
 	return (
 		<View style={{ backgroundColor: theme.colors.white, flex: 1 }}>
-			<Conversations/>
+			<Conversations />
 			<ModalAddFriend
 				showModal={showModalAddFriend}
 				closeModal={closeModalAddFriend}
@@ -31,8 +30,12 @@ const ConversationsScreen = () => {
 				showModal={showModalNewGroup}
 				closeModal={closeModalNewGroup}
 			/>
-			<TouchableOpacity onPress={() => { }} style={fabStyles.styleNewGroup}/>
-			<TouchableOpacity onPress={() => setShowModalAddFriend(true)} style={fabStyles.styleAddFriend}/>
+			<TouchableOpacity onPress={() => setShowModalNewGroup(true)} style={fabStyles.styleNewGroup}>
+				<Image style={fabStyles.image} source={require('../assets/images/add_group.png')} />
+			</TouchableOpacity>
+			<TouchableOpacity onPress={() => setShowModalAddFriend(true)} style={[fabStyles.styleNewGroup, fabStyles.styleAddFriend]}>
+				<Image style={fabStyles.image} source={require('../assets/images/add_friend.png')} />
+			</TouchableOpacity>
 		</View>
 	)
 }

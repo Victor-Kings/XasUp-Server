@@ -11,7 +11,6 @@ export const styles = StyleSheet.create({
 	},
 	modalView: {
 		margin: 10,
-		backgroundColor: "white",
 		borderRadius: 20,
 		padding: 25,
 		alignItems: "center",
@@ -27,7 +26,7 @@ export const styles = StyleSheet.create({
 		elevation: 5
 	},
 	modalViewGroup: {
-		height: 400,
+		height: 500,
 		width: 250,
 		padding: 20,
 	},
@@ -74,7 +73,7 @@ export const styles = StyleSheet.create({
 		backgroundColor: "#120a8f"
 	},
 	buttonNewGroup: {
-		marginTop: 160,
+		marginTop: 30,
 		borderRadius: 20,
 		padding: 10,
 		elevation: 2,
@@ -93,12 +92,60 @@ export const styles = StyleSheet.create({
 		position: 'absolute',
 		top: 117,
 		left: 170,
-		backgroundColor: theme.colors.black,
+		backgroundColor: "#4197e5",
 		borderRadius: 100,
 		elevation: 5,
 		shadowColor: theme.colors.primary,
 		shadowOpacity: 0.4,
 		shadowRadius: 5,
 		shadowOffset: { width: 0, height: 2 },
-	}
+	},
+	containerScrollView: {
+		marginTop: 20,
+		borderRadius: 10,
+		shadowColor: "#000000",
+		width: 200,
+		height: 240,
+		backgroundColor: "#FFFFFF",
+		shadowOpacity: 0.25,
+		shadowRadius: 4,
+		elevation: 5,
+	},
+	userIdsOfGroup: {
+		display: "flex",
+		alignItems: "center",
+		textAlign: "center",
+		backgroundColor: "#4197e5",
+		borderRadius: 10,
+		padding: 5,
+		height: 30,
+		width: 100,
+		marginBottom: 5,
+		alignSelf: "center",
+	},
+	textUserIds: {
+		color: "#ffffff"
+	},
+	image: {
+		display: "flex",
+		height: '100%',
+		width: '100%',
+		resizeMode: 'stretch'
+	}, 
+	buttonClose: {
+		alignItems: "center",
+		justifyContent: "center",
+		width: 20,
+		height: 20,
+		position: 'absolute',
+		top: 8,
+		right: 8,
+		backgroundColor: "#4197e5",
+		borderRadius: 100,
+		elevation: 5,
+		shadowColor: theme.colors.primary,
+		shadowOpacity: 0.4,
+		shadowRadius: 5,
+		shadowOffset: { width: 0, height: 2 },
+	},
 });
