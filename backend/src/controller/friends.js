@@ -24,3 +24,10 @@ exports.getFriends = async(req, res, next) => {
     const friends = await db.findFriends(id)
     res.status(200).send(friends);
 };
+
+exports.deleteFriends = async(req, res, next) => {
+    let id = req.params.id;
+    let id2 = req.params.id2;
+    const friends = await db.findFriends(id)
+    res.status(200).send(friends);
+};
