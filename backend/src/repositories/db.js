@@ -28,9 +28,15 @@ async function insertUser(name){
 
 async function createFriend(param){
     const client = await connect();
+
     const sql = 'INSERT INTO friend(id1,id2) VALUES ($1,$2);';
-    const values = [param.id1,param.id2];
-    return await client.query(sql, values);
+    let values = [param.id1,param.id2];
+    await client.query(sql, values);
+
+    values = [param.id2,param.id1];
+    await client.query(sql, values);
+
+    return (await client.query(`select name from users where id=${param.id2}`)).rows[0]
 }
 
 async function findFriends(id){
@@ -43,10 +49,15 @@ async function findFriends(id){
 
 async function insertUserInGroup(param){
     const client = await connect();
-    const res = await client.query(`SELECT groupnameid FROM "group" WHERE groupname='${param.groupname}'`);
+    console.log(param.groupname);
+    const res = await client.query(`SELECT groupnameid FROM "group" WHERE groupname='${param.groupname}' order by groupnameid desc limit 1`);
     sql = 'INSERT INTO users_in_group(id_user, id_group) VALUES ($1,$2);';
-    const values = [param.id_user,  res.rows[0].groupnameid];
-    return await client.query(sql, values);
+    let values
+    param.id_users.map(async (element) => {
+        values = [element,  res.rows[0].groupnameid];
+        await client.query(sql, values);
+    })
+    return res.rows[0].groupnameid
 }
 
 async function createGroup(param){
@@ -55,7 +66,8 @@ async function createGroup(param){
     const sql = 'INSERT INTO "group"(groupname) VALUES ($1);';
     const values = [param.groupname];
     await client.query(sql, values);
-    return await insertUserInGroup(param);
+    const idGroup = await insertUserInGroup(param);
+    return idGroup
 }
 
 async function findGroup(id){

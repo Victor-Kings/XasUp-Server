@@ -48,7 +48,7 @@ export const fabStyles = StyleSheet.create({
 		position: 'absolute',
 		bottom: 80,
 		right: 10,
-		backgroundColor: "#4197e5",
+		backgroundColor: theme.colors.white,
 		borderRadius: 100,
 		elevation: 5,
 		shadowColor: theme.colors.primary,
@@ -56,13 +56,18 @@ export const fabStyles = StyleSheet.create({
 		shadowRadius: 5,
 		shadowOffset: { width: 0, height: 2 },
 	},
-	styleAddFriend: {
+	styleAddFriend1: {
 		bottom: 10,
+	},
+	styleAddFriend3: {
+		bottom: 150,
+	},
+	styleAddFriend4: {
+		bottom: 220,
 	},
 	image: {
 		display: "flex",
 		height: '60%',
 		width: '60%',
-		resizeMode: 'stretch'
 	}
 })

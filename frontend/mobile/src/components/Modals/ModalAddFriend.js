@@ -1,13 +1,25 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { View, Modal, Text, TextInput, Pressable, TouchableOpacity, Image } from 'react-native';
+import userContext from "../../context/userContext";
+import { FriendService } from "../../services/FriendService/FriendService";
 import { styles } from './ModalStyle';
 
-export default function ModalAddFriend({ showModal, closeModal }) {
+export default function ModalAddFriend({ showModal, closeModal, removeFriend, removeGroup, setRemoveFriend, setRemoveGroup}) {
 
     const [idInput, setIdInput] = useState("");
+    const {user, listFriends, setListFriends, listGroups, setListGroups} = useContext(userContext)
 
     const handleButtonAdd = async () => {
-        console.log("ID do usuário para adicionar: ", idInput);
+        if (removeFriend) {
+            console.log("REMOVENDO idInput", idInput, "listFriends", listFriends);
+        } else if (removeGroup) {
+            console.log("REMOVENDO grupo", idInput, "listGroups", listGroups);
+        } else {
+            const userFriend = await new FriendService().newFriend(user.id, idInput)
+            setListFriends([...listFriends,{ name: userFriend.name, id: idInput }])
+        }
+        setRemoveFriend(false);
+        setRemoveGroup(false);
         closeModal();
     }
 
@@ -19,10 +31,17 @@ export default function ModalAddFriend({ showModal, closeModal }) {
         >
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
-                    <TouchableOpacity onPress={() => closeModal()} style={styles.buttonClose}>
+                    <TouchableOpacity 
+                        onPress={() => {
+                            closeModal()
+                            setRemoveFriend(false);
+                            setRemoveGroup(false);
+                        }}
+                        style={styles.buttonClose}
+                    >
                         <Image style={styles.image} source={require('../../assets/images/x-mark.png')} />
                     </TouchableOpacity>
-                    <Text style={styles.modalText}>Digite o ID do usuário: </Text>
+                    <Text style={styles.modalText}>{removeGroup?"Digite o ID do grupo: ":"Digite o ID do usuário: "} </Text>
                     <View style={styles.mainContainer}>
                         <TextInput style={styles.input} keyboardType='numeric' onChangeText={(text) => setIdInput(text)} />
                     </View>
@@ -30,7 +49,7 @@ export default function ModalAddFriend({ showModal, closeModal }) {
                         style={[styles.button]}
                         onPress={() => handleButtonAdd()}
                     >
-                        <Text style={styles.textStyle}>Adicionar amigo</Text>
+                        <Text style={styles.textStyle}>{removeFriend?"Remover amigo":removeGroup?"Remover grupo":"Adicionar amigo"}</Text>
                     </Pressable>
                 </View>
             </View>

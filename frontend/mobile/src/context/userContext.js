@@ -23,6 +23,7 @@ export function UserProvider({ children }) {
       name:"user.name"
     }
   })
+  console.log(listFriends);
   //exemplo de obj
   // [
   //   {
@@ -141,6 +142,8 @@ export function UserProvider({ children }) {
         sendVisualizedMsg,
         setVisualizedMsg,
         register,
+        setListFriends,
+        setListGroups
       }}
     >
       {children}

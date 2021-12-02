@@ -9,8 +9,8 @@ exports.post = async (req, res, next) => {
 };
 
 exports.createFriend = async (req, res, next) => {
-    await db.createFriend(req.body);
-    res.status(201).send('Success');
+    const result = await db.createFriend(req.body);
+    res.status(200).send(result);
 };
   
 exports.getById = async(req, res, next) => {

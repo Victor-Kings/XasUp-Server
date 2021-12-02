@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { View, Modal, Text, TextInput, Pressable, TouchableOpacity, ScrollView, Image } from 'react-native';
+import userContext from "../../context/userContext";
+import { GroupService } from "../../services/GroupService/GroupService";
 import { styles } from './ModalStyle';
 
 export default function ModalNewGroup({ showModal, closeModal }) {
@@ -7,10 +9,13 @@ export default function ModalNewGroup({ showModal, closeModal }) {
     const [groupName, setGroupName] = useState("");
     const [friendListOfGroup, setFriendListOfGroup] = useState([])
     const [inputModal, setInputModal] = useState("")
-
+    const {user, listGroups, setListGroups} = useContext(userContext)
 
     const handleButtonCreate = async () => {
-        console.log("Nome do Grupo: ", groupName);
+        console.log("GRUPO CREATE",groupName, [...friendListOfGroup, user.id] );
+        const groupId = await new GroupService().newGroup(groupName, [...friendListOfGroup, user.id])
+        console.log("list grouop",[...listGroups,{groupname:groupName,groupnameid: groupId.id}]);
+        setListGroups([...listGroups,{groupname:groupName, groupnameid: groupId.id}])
         closeModal();
     }
 

@@ -14,9 +14,9 @@ export const styles = StyleSheet.create({
 		borderRadius: 20,
 		padding: 25,
 		alignItems: "center",
-		shadowColor: "#000000",
+		shadowColor: theme.colors.black,
 		height: 200,
-		backgroundColor: theme.colors.primary,
+		backgroundColor: theme.colors.white,
 		shadowOffset: {
 			width: 0,
 			height: 2
@@ -44,7 +44,7 @@ export const styles = StyleSheet.create({
 	},
 	input: {
 		flex: 1,
-		backgroundColor: theme.colors.white,
+		backgroundColor: theme.colors.inputBackground,
 		color: theme.colors.black,
 		width: '100%',
 		fontSize: 15,
@@ -56,7 +56,7 @@ export const styles = StyleSheet.create({
 	modalText: {
 		marginBottom: 15,
 		textAlign: "center",
-		color: "#ffffff",
+		color: theme.colors.black,
 		fontSize: 15,
 		fontWeight: "bold"
 	},
@@ -70,14 +70,14 @@ export const styles = StyleSheet.create({
 		borderRadius: 20,
 		padding: 10,
 		elevation: 2,
-		backgroundColor: "#120a8f"
+		backgroundColor: theme.colors.primary
 	},
 	buttonNewGroup: {
 		marginTop: 30,
 		borderRadius: 20,
 		padding: 10,
 		elevation: 2,
-		backgroundColor: "#120a8f"
+		backgroundColor: theme.colors.primary
 	},
 	textStyle: {
 		color: "white",
@@ -92,7 +92,7 @@ export const styles = StyleSheet.create({
 		position: 'absolute',
 		top: 117,
 		left: 170,
-		backgroundColor: "#4197e5",
+		backgroundColor: theme.colors.searchIcon,
 		borderRadius: 100,
 		elevation: 5,
 		shadowColor: theme.colors.primary,
@@ -115,7 +115,7 @@ export const styles = StyleSheet.create({
 		display: "flex",
 		alignItems: "center",
 		textAlign: "center",
-		backgroundColor: "#4197e5",
+		backgroundColor: theme.colors.primary,
 		borderRadius: 10,
 		padding: 5,
 		height: 30,
@@ -124,7 +124,7 @@ export const styles = StyleSheet.create({
 		alignSelf: "center",
 	},
 	textUserIds: {
-		color: "#ffffff"
+		color: theme.colors.white
 	},
 	image: {
 		display: "flex",
@@ -140,7 +140,7 @@ export const styles = StyleSheet.create({
 		position: 'absolute',
 		top: 8,
 		right: 8,
-		backgroundColor: "#4197e5",
+		backgroundColor: theme.colors.searchIcon,
 		borderRadius: 100,
 		elevation: 5,
 		shadowColor: theme.colors.primary,
