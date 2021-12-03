@@ -1,5 +1,6 @@
 const Kafka = require('no-kafka');
 const mqtt = require('mqtt')
+const axios = require('axios')
 const host = 'localhost'
 const port = '1883'
 const clientId = `mqtt_${Math.random().toString(16).slice(3)}`
@@ -19,16 +20,31 @@ var data = function (messageSet) {
         console.log(message);
         console.log(`${message.topic}`);
         console.log(message.data);
+
         const payload = {
             originTopic: message.originTopic,
             data: message.data,
             originName: message.originName
         }
-        client.publish(`${message.topic}`,JSON.stringify(payload), { qos: 0, retain: false }, (error) => {
-            if (error) {
-                console.error(error)
-            }
-        })
+
+        if(topic.includes("_GROUP")){
+            const newTopic = topic.slice("_")[0]
+            const {data} = await axios.get(`http://localhost:3333/group/findUserInGroup/${newTopic}`)
+            data.forEach((element)=>{
+                client.publish(`${element.id}`,JSON.stringify(payload), { qos: 0, retain: false }, (error) => {
+                    if (error) {
+                        console.error(error)
+                    }
+                })
+            })
+        } else {
+            client.publish(`${message.topic}`,JSON.stringify(payload), { qos: 0, retain: false }, (error) => {
+                if (error) {
+                    console.error(error)
+                }
+            })
+        }
+
     });
 };
 
