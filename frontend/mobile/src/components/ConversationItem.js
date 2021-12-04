@@ -19,7 +19,7 @@ const ConversationItem = ({  username, id, isGroup = false }) => {
 				})
 				setCurrentChat(`${id}`)
 				if(!isGroup) {
-					sendVisualizg(`${id}`)
+					sendVisualizedMsg(`${id}`)
 				}
 			}}>
 				<View style={{

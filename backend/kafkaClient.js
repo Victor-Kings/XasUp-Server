@@ -15,6 +15,7 @@ const client = mqtt.connect(connectUrl, {
 
 const consumer = new Kafka.SimpleConsumer({"connectionString":"127.0.0.1:29092"})
 var data = function (messageSet) {
+    console.log("CHEGOU NA LINHA 19 DO KAFKA")
     messageSet.forEach(async function (m) {
         const message = JSON.parse(m.message.value.toString('utf8'))
         console.log(message);
@@ -27,7 +28,8 @@ var data = function (messageSet) {
             originName: message.originName
         }
 
-        if(message.topic.includes("_GROUP")){
+        console.log("message.topic: ", message.topic)
+        if(message.topic.includes('_GROUP')){
             const newTopic = message.topic.slice("_")[0]
             console.log("newTopic", newTopic);
             const {data} = await axios.get(`http://192.168.5.108:3333/group/findUserInGroup/${newTopic}`)

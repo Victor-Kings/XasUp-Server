@@ -52,7 +52,7 @@ const MessagesScreen = ({ navigation, route }) => {
 			MqttController.sendMessage('baeldung', {
 				originTopic: user.id,
 				originName: user.name,
-				topic: id,
+				topic: `${id}`,
 				data: msg
 			});
 		}

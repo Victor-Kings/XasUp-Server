@@ -5,12 +5,11 @@ import userContext from '../context/userContext';
 import ConversationItem from './ConversationItem';
 
 const Conversations = ({ children }) => {
-	//const {listFriends , listGroups} = useContext(userContext);
-
+	const {listFriends , listGroups} = useContext(userContext);
 	return (
 		<ScrollView>
 			{children}
-			{/* {
+			 {
 				listFriends?.map((element)=>
 					<ConversationItem
 						key={`${element.id}_name`}
@@ -29,9 +28,7 @@ const Conversations = ({ children }) => {
 						id={`${element.groupnameid}_GROUP`}
 					/>
 				)
-			} */}
-
-
+			}
 		</ScrollView>
 	)
 }

@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
+import MqttController from '../../services/mqttController';
 import userContext from '../../context/userContext';
 import {FriendService} from '../../services/FriendService/FriendService';
 import {styles} from './ModalStyle';
@@ -47,6 +48,12 @@ export default function ModalAddFriend({
       });
       setListGroups([result]);
     } else {
+      MqttController.sendMessage('baeldung', {
+				originTopic: user.id,
+				originName: user.name,
+				topic: `${idInput}`,
+				data: "NEW_FRIEND"
+			});
       const userFriend = await new FriendService().newFriend(user.id, idInput);
       setListFriends([...listFriends, {name: userFriend.name, id: idInput}]);
     }

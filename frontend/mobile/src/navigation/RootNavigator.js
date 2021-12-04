@@ -13,10 +13,10 @@ import userContext from '../context/userContext';
 const Stack = createStackNavigator();
 
 const RootNavigator = () => {
-	const {user, updateMsg, setVisualizedMsg} = useContext(userContext);
+	const {user, updateMsg, setVisualizedMsg, setNewFriend, attGroups} = useContext(userContext);
 
 	useEffect(()=>{
-		MqttController.init({topic:user?.id||"s"}, updateMsg, setVisualizedMsg)
+		MqttController.init({topic:user?.id||"s"}, updateMsg, setVisualizedMsg, setNewFriend, attGroups)
 	},[user])
 
 	return (
@@ -28,7 +28,7 @@ const RootNavigator = () => {
 			<Stack.Screen name="RegisterScreen" component={RegisterScreen} />
 			<Stack.Screen name="HomeScreen" component={ConversationsScreen} options={{
 				headerShown: true,
-				header: () => <Header title={`Olá, ${user.name}    -    #${'1'}`} />
+				header: () => <Header title={`Olá, ${user.name}    -    #${user.id}`} />
 			}} />
 			<Stack.Screen name="MessagesScreen" component={MessagesScreen} />
 		</Stack.Navigator>

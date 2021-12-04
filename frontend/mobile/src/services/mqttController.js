@@ -1,16 +1,29 @@
 import MQTT from 'sp-react-native-mqtt';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 var cli = null;
 
 class MqttConnection {
-    init(props, updateMsg, setVisualizedMsg) {
+    init(props, updateMsg, setVisualizedMsg, setNewFriend, attGroups) {
         console.log(MQTT);
         MQTT.createClient({
             uri: 'mqtt://192.168.5.108:1883',
             clientId: "id"+ Math.random().toString(16).substr(2, 8),
         }).then(client => {
-            client.on('message', msg => {
+            client.on('message', async(msg) => {
                 const message = JSON.parse(msg.data);   
-                if(message.data==`${message.originTopic}_Visualized`) {
+                console.log("CHEGOU NA LINHA 13", message)
+
+                if(message.data.toString().includes("NEWGROUP_")){
+
+                    const data = message.data.split("_")[1].split("+")
+                    console.log(data);
+                    attGroups(data[0], data[1])
+                }else if(message.data=="NEW_FRIEND"){
+                    setNewFriend({
+                        originTopic: message.originTopic,
+                        originName: message.originName
+                    })
+                }else if(message.data==`${message.originTopic}_Visualized`) {
                     setVisualizedMsg(message.originTopic.toString())
                 }else {
                     var currentTime = new Date();

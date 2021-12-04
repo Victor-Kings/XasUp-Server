@@ -13,6 +13,7 @@ export function UserProvider({ children }) {
   const [listGroups, setListGroups] = useState([])
   const [userMsg, setUserMsg] = useState([])
   const [groupMsg, setGroupMsg] = useState([])
+  const [newFriend, setNewFriend] = useState(null)
   const [newMsg, setNewMsg] = useState({
     id: "213333000000", 
     newMessage: false,
@@ -44,12 +45,15 @@ export function UserProvider({ children }) {
   const [currentChat, setCurrentChat] = useState(null)
   const signIn = async(id) => {
     const data = await new UserService().verifyUser(id) 
-    if(data)  {
+    
+    if(data) {
       setUser({id: id, name: data})  
       const friends = await new FriendService().getFriends(id)
+      console.log("friends", friends);
       const groups = await new GroupService().getGroups(id)
       setListFriends(friends)
       setListGroups(groups)
+      await AsyncStorage.setItem('@newGroup', JSON.stringify(groups))
       return "logado"
     }
     return ""
@@ -113,9 +117,9 @@ export function UserProvider({ children }) {
 
   const setVisualizedMsg = async (originId) => {
     let auxArray = await AsyncStorage.getItem('@userMsg')
- if(auxArray!=null){
-    auxArray = JSON.parse(auxArray)
- }
+    if(auxArray!=null){
+        auxArray = JSON.parse(auxArray)
+    }
     auxArray.map((value) => {
       if(`${value.id}` == `${originId}`){
         value.chatItms.map((element)=>{
@@ -126,6 +130,22 @@ export function UserProvider({ children }) {
     
     await AsyncStorage.setItem('@userMsg', JSON.stringify(auxArray))
     setUserMsg(auxArray)
+  }
+
+  const attGroups= async(groupname, groupnameid) => {
+    let auxArray = await AsyncStorage.getItem('@newGroup')
+    let newGroups
+    if(auxArray){
+      auxArray = JSON.parse(auxArray)
+      newGroups = [...auxArray, {groupname: groupname, groupnameid: groupnameid}]
+    }else{
+      newGroups = [{groupname: groupname, groupnameid: groupnameid}]
+    }
+    console.log("CHEGNADO AQUI - auxArray", auxArray);
+    
+    console.log("newGroups",newGroups);
+    setListGroups(newGroups)
+    await AsyncStorage.setItem('@newGroup', JSON.stringify(newGroups))
   }
 
   return (
@@ -147,7 +167,10 @@ export function UserProvider({ children }) {
         setVisualizedMsg,
         register,
         setListFriends,
-        setListGroups
+        setListGroups,
+        newFriend,
+        setNewFriend,
+        attGroups
       }}
     >
       {children}

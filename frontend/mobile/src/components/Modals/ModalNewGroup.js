@@ -3,20 +3,32 @@ import { View, Modal, Text, TextInput, Pressable, TouchableOpacity, ScrollView, 
 import userContext from "../../context/userContext";
 import { GroupService } from "../../services/GroupService/GroupService";
 import { styles } from './ModalStyle';
+import MqttController from "../../services/mqttController";
 
 export default function ModalNewGroup({ showModal, closeModal }) {
 
     const [groupName, setGroupName] = useState("");
     const [friendListOfGroup, setFriendListOfGroup] = useState([])
     const [inputModal, setInputModal] = useState("")
-    const {user, listGroups, setListGroups} = useContext(userContext)
+    const {user, listGroups, setListGroups, attGroups} = useContext(userContext)
 
     const handleButtonCreate = async () => {
-        console.log("GRUPO CREATE",groupName, [...friendListOfGroup, user.id] );
         const groupId = await new GroupService().newGroup(groupName, [...friendListOfGroup, user.id])
         console.log("list grouop",[...listGroups,{groupname:groupName,groupnameid: groupId.id}]);
-        setListGroups([...listGroups,{groupname:groupName, groupnameid: groupId.id}])
+        //setListGroups([...listGroups,{groupname:groupName, groupnameid: groupId.id}])
+        attGroups(groupName, groupId.id)
+
+        friendListOfGroup.map((element, index)=>{
+            MqttController.sendMessage('baeldung', {
+                originTopic: user.id,
+                originName: user.name,
+                topic: `${element}`,
+                data: `NEWGROUP_${groupName}+${groupId.id}`
+            });
+        })
+
         closeModal();
+        setFriendListOfGroup([]);
     }
 
     const handleAddUser = async () => {
