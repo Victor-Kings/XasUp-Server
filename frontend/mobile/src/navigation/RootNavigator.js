@@ -28,7 +28,7 @@ const RootNavigator = () => {
 			<Stack.Screen name="RegisterScreen" component={RegisterScreen} />
 			<Stack.Screen name="HomeScreen" component={ConversationsScreen} options={{
 				headerShown: true,
-				header: () => <Header title="Chat" />
+				header: () => <Header title={`Olá, ${user.name}    -    #${'1'}`} />
 			}} />
 			<Stack.Screen name="MessagesScreen" component={MessagesScreen} />
 		</Stack.Navigator>
