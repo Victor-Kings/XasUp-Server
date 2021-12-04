@@ -85,4 +85,21 @@ async function findUserInGroup(id){
 }
 
 
-module.exports = { selectUser, insertUser, findFriends, createGroup , findGroup, findUserInGroup, createFriend}
+async function deleteUserfriendship(id, id2){
+    const client = await connect();
+    const sql = `DELETE from friend where (id1=${id} and id2=${id2}) or (id1=${id2} and id2=${id})`
+    const res = await client.query(sql);
+    return res.rows;
+}
+
+async function deleteUserofGroup(id, group){
+    const client = await connect();
+    console.log("ENTROU NO deleteUserofGroup");
+    let sql = `select groupnameid from "group" where groupname='${group}';`
+    let res = await client.query(sql);
+    sql = `delete from users_in_group where id_user=${id} and id_group=${res.rows[0].groupnameid};`
+    res = await client.query(sql);
+    return res.rows;
+}
+
+module.exports = { selectUser, insertUser, findFriends, createGroup , findGroup, findUserInGroup, createFriend, deleteUserfriendship, deleteUserofGroup}

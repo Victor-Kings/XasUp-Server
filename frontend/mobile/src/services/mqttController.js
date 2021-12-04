@@ -5,7 +5,7 @@ class MqttConnection {
     init(props, updateMsg, setVisualizedMsg) {
         console.log(MQTT);
         MQTT.createClient({
-            uri: 'mqtt://192.168.0.103:1883',
+            uri: 'mqtt://192.168.5.108:1883',
             clientId: "id"+ Math.random().toString(16).substr(2, 8),
         }).then(client => {
             client.on('message', msg => {

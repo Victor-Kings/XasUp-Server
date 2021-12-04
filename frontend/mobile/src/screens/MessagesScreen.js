@@ -79,7 +79,9 @@ const MessagesScreen = ({ navigation, route }) => {
 
 	useEffect(()=>{
 		walkChatToSet()
-		sendVisualizedMsg(`${id}`)
+		if(!isGroup){
+			sendVisualizedMsg(`${id}`)
+		}
 	}, [userMsg, groupMsg])
 
 	return (

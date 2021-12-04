@@ -56,10 +56,13 @@ export function UserProvider({ children }) {
   }
 
   const register = async(name) => {
+    console.log("entrou na funcao register");
+    AsyncStorage.clear();
     const data = await new UserService().newUser(name)
+    console.log("SAIU DO DATA", data);
     if(data){
       console.log("DATA.", data);
-      setUser({id: data.id, name: name}) 
+      setUser({id:`${data.id}`, name: name}) 
       setListFriends([])
       setListGroups([])
       return "logado"
@@ -76,7 +79,8 @@ export function UserProvider({ children }) {
     if(!auxArray){
       auxArray = []
     }else{
-      auxArray = JSON.parse(auxArray)
+      if(auxArray != null){
+      auxArray = JSON.parse(auxArray)}
     }
     let flag = 0
 
@@ -109,9 +113,9 @@ export function UserProvider({ children }) {
 
   const setVisualizedMsg = async (originId) => {
     let auxArray = await AsyncStorage.getItem('@userMsg')
- 
+ if(auxArray!=null){
     auxArray = JSON.parse(auxArray)
-
+ }
     auxArray.map((value) => {
       if(`${value.id}` == `${originId}`){
         value.chatItms.map((element)=>{

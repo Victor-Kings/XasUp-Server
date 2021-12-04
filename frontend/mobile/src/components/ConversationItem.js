@@ -18,7 +18,9 @@ const ConversationItem = ({  username, id, isGroup = false }) => {
 					isGroup: isGroup,
 				})
 				setCurrentChat(`${id}`)
-				sendVisualizedMsg(`${id}`)
+				if(!isGroup) {
+					sendVisualizg(`${id}`)
+				}
 			}}>
 				<View style={{
 						flex: 1,
