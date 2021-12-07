@@ -94,3 +94,10 @@ npx react-native start
  - https://github.com/SudoPlz/sp-react-native-mqtt
  - https://mosquitto.org/
 
+### Authors
+- [Chistopher de Oliveira Souza](https://github.com/Christopher-OSouza)
+- [Hiago da Silva](https://github.com/hiagomoa)
+- [Leonardo Sanavio](https://github.com/LeoSanavio)
+- [Murilo de Paula Araujo](https://www.github.com/murilodepa)
+- [Victor Reis](https://github.com/Victor-Kings)
+
