@@ -10,7 +10,7 @@
 
 ## Executando
 
-Vamos começar configurando o broker mqtt e o kafka.
+Vamos começar configurando o broker mqtt e o kafka que é coordenado pelo zookeper.
 
 Dentro do diretorio ```/backend``` rode o seguinte comando para subir o docker:
 
