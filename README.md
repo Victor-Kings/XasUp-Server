@@ -41,8 +41,10 @@ Também teremos que trocar o IP para o da máquina em questão, em qualquer term
 ```sh
 ipconfig
  ```
-     Adaptador Ethernet Ethernet:                                                                                                                                                                                                                       Sufixo DNS específico de conexão. . . . . . : ------                                                               Endereço IPv6 de link local . . . . . . . . : ------
-    Endereço IPv4. . . . . . . .  . . . . . . . : 192.168.0.109                                                        Máscara de Sub-rede . . . . . . . . . . . . : ------   
+     Adaptador Ethernet Ethernet:                                                                                                                                                     Sufixo DNS específico de conexão. . . . . . : ------
+    Endereço IPv6 de link local . . . . . . . . : ------
+    Endereço IPv4. . . . . . . .  . . . . . . . : 192.168.0.109
+    Máscara de Sub-rede . . . . . . . . . . . . : ------   
     Gateway Padrão. . . . . . . . . . . . . . . : ------      
  
 Então pegue o endereço IPv4 e substitua nos seguintes arquivos:
