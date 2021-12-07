@@ -92,6 +92,7 @@ npx react-native start
 **Referências**
  - https://www.baeldung.com/kafka-connect-mqtt-mongodb
  - https://github.com/SudoPlz/sp-react-native-mqtt
+ - https://www.emqx.com/en/blog/how-to-use-mqtt-in-nodejs
  - https://mosquitto.org/
 
 ### Authors
