@@ -60,7 +60,7 @@ Vamos aproveitar e substituir em todos arquivos necessários, incluindo do front
 
 Agora vamos rodar nossa api em node para isso precisamos antes subir um banco postgres, novamente dentro de ```/backend```, execute:
 ```sh
-docker-compose -f postgress.yml
+docker-compose up -f postgress.yml
 ```
 
 Novamente dentro de ```/backend``` instalaremos as dependecias, então rode:
