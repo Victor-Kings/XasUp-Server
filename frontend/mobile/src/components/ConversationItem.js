@@ -6,8 +6,8 @@ import { theme } from '../theme';
 import userContext from '../context/userContext';
 const ConversationItem = ({  username, id, isGroup = false }) => {
 	const navigation = useNavigation();
-	const {setCurrentChat, sendVisualizedMsg, userMsg} = useContext(userContext);
-
+	const {setCurrentChat, sendVisualizedMsg, userMsg, groupMsg} = useContext(userContext);
+	const rendeChats = isGroup ? groupMsg : userMsg
 	return (
 		<View style={styles.container}>
 			<TouchableOpacity style={styles.conversation}
@@ -37,12 +37,13 @@ const ConversationItem = ({  username, id, isGroup = false }) => {
 						justifyContent: 'space-between'
 					}}>
 						<Text style={styles.message}>
-							{userMsg?.map((value)=>{
-								if(value.id == id){
+							{rendeChats?.map((value)=>{
+								if(value.id == id || value.id == `${id}_GROUP`){
 									if(value.chatItms && value.chatItms.length > 0){
 										return value.chatItms[value.chatItms.length - 1].content
 									}
 								}
+								console.log("UUUIUIUIUIUIU");
 								return ""
 							})}			
 						</Text>

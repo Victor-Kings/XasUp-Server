@@ -44,6 +44,9 @@ export function UserProvider({ children }) {
           
   const [currentChat, setCurrentChat] = useState(null)
   const signIn = async(id) => {
+    AsyncStorage.clear();
+    setUserMsg([]);
+    setGroupMsg([]);
     const data = await new UserService().verifyUser(id) 
     
     if(data) {
@@ -62,6 +65,8 @@ export function UserProvider({ children }) {
   const register = async(name) => {
     console.log("entrou na funcao register");
     AsyncStorage.clear();
+    setUserMsg([]);
+    setGroupMsg([]);
     const data = await new UserService().newUser(name)
     console.log("SAIU DO DATA", data);
     if(data){

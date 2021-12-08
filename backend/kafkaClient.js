@@ -30,7 +30,7 @@ var data = function (messageSet) {
 
         console.log("message.topic: ", message.topic)
         if(message.topic.includes('_GROUP')){
-            const newTopic = message.topic.slice("_")[0]
+            const newTopic = message.topic.split("_")[0]
             console.log("newTopic", newTopic);
             const {data} = await axios.get(`http://192.168.5.108:3333/group/findUserInGroup/${newTopic}`)
             console.log("Data", data);
